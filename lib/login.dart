@@ -181,16 +181,16 @@ class _LoginState extends State<Login> {
                       // Lógica de login com Google
                     },
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.black87, // Cor do texto
-                      backgroundColor: Colors.white, // Fundo branco
+                      foregroundColor: Colors.black87, 
+                      backgroundColor: Colors.white, 
                       side: const BorderSide(
                         color: Colors.grey,
                         width: 1.0,
-                      ), // Borda fina cinza
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                           8.0,
-                        ), // Bordas arredondadas
+                        ),
                       ),
                     ),
                     // icon: Image.asset(
