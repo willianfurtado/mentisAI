@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/login.dart';
+import 'package:mentis_ai/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
