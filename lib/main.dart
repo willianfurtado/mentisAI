@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/login.dart';
+import 'package:mentis_ai/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Login(),
+      home: Home(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
