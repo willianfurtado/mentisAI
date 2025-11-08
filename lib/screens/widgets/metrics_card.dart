@@ -13,7 +13,7 @@ class MetricsCard extends StatelessWidget {
     required this.unit,
     required this.icon,
   });
-                    
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,11 +43,10 @@ class MetricsCard extends StatelessWidget {
               Icon(icon, color: Colors.blue, size: 24),
             ],
           ),
-
           Text(
             value,
             style: const TextStyle(
-              fontSize: 32,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -57,7 +56,7 @@ class MetricsCard extends StatelessWidget {
             unit,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
               color: Colors.grey[400],
             ),
           ),

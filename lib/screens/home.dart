@@ -39,6 +39,7 @@ class Home extends StatelessWidget {
                     unit: 'kcal',
                     icon: Icons.local_fire_department,
                   ),
+                  const SizedBox(height: 8),
                   MetricsCard(
                     title: 'Calorias',
                     value: '2000',
