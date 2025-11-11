@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/screens/widgets/evolution-cards.dart';
 
 class ScreeeningSystem extends StatelessWidget {
   const ScreeeningSystem({super.key});
@@ -12,7 +13,7 @@ class ScreeeningSystem extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              
+              EvolutionCards(title: 'Freq. Cardiaca', icon: Icons.heart_broken_sharp)
             ],
           ),
         ),

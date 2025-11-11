@@ -26,6 +26,7 @@ class EvolutionCards extends StatelessWidget {
         children: [
           Row(
             children: [
+              //Icone da seção
               Container(
                 height: 50,
                 width: 50,
@@ -39,10 +40,23 @@ class EvolutionCards extends StatelessWidget {
                   size: 30,
                 ),
               ),
+
               Container(
                 height: 23,
                 width: 23,
-                
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.chevron_right,
+                    color: Colors.blue,
+                    size: 30),
+                  onPressed: () => {
+                    //Implementar lógica de ir para a página 
+                  }, 
+                ),
               ),
             ],
           ),
