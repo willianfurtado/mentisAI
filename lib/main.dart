@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/home.dart';
 import 'package:mentis_ai/screens/screening_system.dart';
 
 void main() {
