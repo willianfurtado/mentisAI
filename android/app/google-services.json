@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "409331129900",
+    "project_id": "mentisia-247a6",
+    "storage_bucket": "mentisia-247a6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409331129900:android:c9380035ef37e2f6defb89",
+        "android_client_info": {
+          "package_name": "com.example.mentis_ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSc-5nRKIYFwxQdfF8sbCi9x5LnStTv0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

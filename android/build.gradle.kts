@@ -1,3 +1,11 @@
+plugins {
+    id("com.android.application") version "8.9.1" apply false
+    id("org.jetbrains.kotlin.android") version "2.1.0" apply false
+    id("com.google.gms.google-services") version "4.3.15" apply false
+    id("dev.flutter.flutter-gradle-plugin") apply false
+}
+
+// 🔹 Repositórios globais (necessário para o Firebase e o Google)
 allprojects {
     repositories {
         google()
@@ -5,6 +13,7 @@ allprojects {
     }
 }
 
+// 🔹 Ajuste de build directory (mantém igual ao seu original)
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
@@ -15,10 +24,12 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// 🔹 Tarefa padrão de limpeza
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
