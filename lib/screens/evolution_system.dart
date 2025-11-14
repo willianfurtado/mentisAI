@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/screens/widgets/evolution-cards.dart';
 
 class EvolutionSystem extends StatelessWidget {
   const EvolutionSystem({super.key});
@@ -20,7 +21,7 @@ class EvolutionSystem extends StatelessWidget {
                 ),
               ),
 
-              
+              EvolutionCards(title: 'Freq. Cardíaca', icon: Icons.heart_broken),
             ],
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/screening_system.dart';
+import 'package:mentis_ai/screens/evolution_system.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: ScreeeningSystem(),
+      home: EvolutionSystem(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
-
