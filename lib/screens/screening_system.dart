@@ -16,14 +16,16 @@ class ScreeeningSystem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Text(
+                child: const Text(
                   'Sistema de triagem e alerta',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 30),
 
+              //Seção de classificação de cluster
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Classificação de Cluster',
@@ -34,40 +36,40 @@ class ScreeeningSystem extends StatelessWidget {
               ),
               const SizedBox(height: 150),
 
+              //Seção Análise detalhada
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Análise detalhada',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
 
                   GridView.count(
                     crossAxisCount: 2,
-                    shrinkWrap:
-                        true, 
-                    physics:
-                        const NeverScrollableScrollPhysics(), 
-                    padding: const EdgeInsets.all(
-                      0,
-                    ), 
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(0),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    childAspectRatio:
-                        1.5,
+                    childAspectRatio: 2.0,
                     children: const [
                       AnalysisCard(text: 'Sua VFC está 25% abaixo do normal'),
                       AnalysisCard(
-                        text: 'Seu descanso noturno foi interrompido',
+                        text: 'Você teve um aumento nas chamadas rejeitadas',
+                      ),
+                      AnalysisCard(text: 'A média de passos semanais caiu'),
+                      AnalysisCard(
+                        text: 'Você teve um aumento nas chamadas rejeitadas',
                       ),
                       // Adicione mais cards se necessário para preencher o Grid
                     ],
                   ),
                 ],
               ),
-              const SizedBox(height: 150),
 
+              const SizedBox(height: 25),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

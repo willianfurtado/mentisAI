@@ -15,12 +15,15 @@ class AnalysisCard extends StatelessWidget {
         color: Colors.green[400],
         borderRadius: BorderRadius.circular(16.0),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-          color: Colors.black,
+      child: Center(
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Colors.black,
+          ),
         ),
       ),
     );
