@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBSc-5nRKIYFwxQdfF8sbCi9x5LnStTv0A',
+    apiKey: dotenv.env['GOOGLE_ANDROID_API_KEY']!,
     appId: '1:409331129900:android:c9380035ef37e2f6defb89',
     messagingSenderId: '409331129900',
     projectId: 'mentisia-247a6',
