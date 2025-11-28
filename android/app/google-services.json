@@ -12,7 +12,20 @@
           "package_name": "com.example.mentis_ai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "409331129900-98qqr26dth0bvacio2a1ct84ulbp6kfq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mentis_ai",
+            "certificate_hash": "97230229b973ea3849d690de98e28bd06e6f479e"
+          }
+        },
+        {
+          "client_id": "409331129900-9stgkk1gpq625kbetlv6s5avqb3fke0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBSc-5nRKIYFwxQdfF8sbCi9x5LnStTv0A"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409331129900-9stgkk1gpq625kbetlv6s5avqb3fke0s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "409331129900-38b3luu0n5075mcfu272b3j8u5ouo0o2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mentisAi"
+              }
+            }
+          ]
         }
       }
     }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:credential_manager/credential_manager.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,6 +14,107 @@ class _LoginState extends State<Login> {
   String email = '';
   String senha = '';
   bool _isPasswordVisible = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isLoading = false;
+
+  final CredentialManager _credentialManager = CredentialManager();
+
+  Future<void> _handleGoogleSignIn() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Passo A: Inicializar o Credential Manager (Necessário no Android)
+      // O 'googleClientId' deve ser o seu "ID do cliente da Web" do Console do Google Cloud/Firebase.
+      await _credentialManager.init(
+        preferImmediatelyAvailableCredentials: true,
+        googleClientId:
+            '409331129900-9stgkk1gpq625kbetlv6s5avqb3fke0s.apps.googleusercontent.com',
+      );
+
+      final GoogleIdTokenCredential? result =
+          await _credentialManager.saveGoogleCredential();
+      if (result == null) {
+        // Usuário cancelou o login
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      // // Obter a autenticação
+      final credential = GoogleAuthProvider.credential(
+        idToken: result.idToken,
+        accessToken: null, // O accessToken pode ser nulo
+      );
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      // Pegue o usuário real do Firebase
+      final User? firebaseUser = userCredential.user;
+
+      // Print correto
+      print(
+          'Usuário logado com sucesso: ${firebaseUser?.displayName ?? firebaseUser?.email}');
+    } catch (e) {
+      print('Erro durante o login com Credential Manager: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro no login: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _handleEmailSignIn() async {
+    try {
+      if (email.isEmpty || senha.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Por favor, preencha email e senha'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+        return;
+      }
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: senha,
+      );
+
+      print('Login com email realizado com sucesso');
+    } catch (e) {
+      print('Erro durante o login com email: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro no login: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +130,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                //Logo MentisAI
+                // Logo MentisAI
                 Center(
                   child: Column(
                     children: [
@@ -35,14 +139,11 @@ class _LoginState extends State<Login> {
                         height: 300.0,
                         width: 300.0,
                       ),
-                      // const SizedBox(height: 10),
-                      // const Text(),
-                      // const SizedBox(height: 50),
                     ],
                   ),
                 ),
 
-                //Campo de email
+                // Campo de email
                 const Text(
                   'Email',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
@@ -50,12 +151,13 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 8),
                 TextField(
                   onChanged: (text) {
-                    email = text;
+                    setState(() {
+                      email = text;
+                    });
                   },
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText:
-                        'Digite seu email...', // Placeholder como no protótipo
+                    hintText: 'Digite seu email...',
                     contentPadding: const EdgeInsets.symmetric(
                       vertical: 15.0,
                       horizontal: 10.0,
@@ -74,14 +176,18 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                //Campo de senha
+
+                // Campo de senha
                 const Text(
                   'Senha',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                 ),
+                const SizedBox(height: 8),
                 TextField(
                   onChanged: (text) {
-                    senha = text;
+                    setState(() {
+                      senha = text;
+                    });
                   },
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
@@ -92,12 +198,12 @@ class _LoginState extends State<Login> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      borderSide: const BorderSide(color: Colors.green),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                       borderSide: const BorderSide(
-                        color: Colors.grey,
+                        color: Colors.green,
                         width: 2.0,
                       ),
                     ),
@@ -106,7 +212,7 @@ class _LoginState extends State<Login> {
                         _isPasswordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                       onPressed: () {
                         setState(() {
@@ -121,9 +227,9 @@ class _LoginState extends State<Login> {
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     onPressed: () {
-                      //Implementar recuperação de senha
+                      // Implementar recuperação de senha
                     },
-                    child: Text(
+                    child: const Text(
                       'Esqueceu sua Senha?',
                       style: TextStyle(color: Colors.black),
                     ),
@@ -132,14 +238,11 @@ class _LoginState extends State<Login> {
 
                 const SizedBox(height: 20),
 
-                //Botão de entrar
+                // Botão de entrar com email
                 SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      //Implementar lógica de login
-                      print('Email: $email, Senha: $senha');
-                    },
+                    onPressed: _isLoading ? null : _handleEmailSignIn,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
@@ -147,63 +250,79 @@ class _LoginState extends State<Login> {
                       ),
                       elevation: 0,
                     ),
-                    child: const Text(
-                      'Entrar',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          )
+                        : const Text(
+                            'Entrar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
 
                 const SizedBox(height: 30),
 
-                Row(
+                const Row(
                   children: [
                     Expanded(child: Divider(color: Colors.grey)),
                     Padding(
-                      padding: EdgeInsetsGeometry.symmetric(horizontal: 10.0),
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text('ou', style: TextStyle(color: Colors.blue)),
                     ),
                     Expanded(child: Divider(color: Colors.grey)),
                   ],
                 ),
 
-                // const SizedBox(height: 30),
+                const SizedBox(height: 30),
 
-                // 7. Botão Entrar com o Google
+                // Botão Entrar com o Google - CORRIGIDO
                 SizedBox(
                   height: 50,
                   child: OutlinedButton.icon(
-                    onPressed: () {
-                      // Lógica de login com Google
-                    },
+                    onPressed: _isLoading
+                        ? null
+                        : _handleGoogleSignIn, // ← Este é o método que estava faltando
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.black87, 
-                      backgroundColor: Colors.white, 
+                      foregroundColor: Colors.black87,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(
                         color: Colors.grey,
                         width: 1.0,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          8.0,
-                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    // icon: Image.asset(
-                    //   'assets/images/google-icon.svg',
-                    //   height: 20.0,
-                    // ),
-                    label: const Text(
-                      'Entrar com o Google',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    icon: Image.asset(
+                      'assets/images/google-icon.png',
+                      height: 20.0,
                     ),
+                    label: _isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text(
+                            'Entrar com o Google',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                   ),
                 ),
               ],

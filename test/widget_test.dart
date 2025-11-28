@@ -8,8 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:mentis_ai/main.dart';
-
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build a minimal app for the test and trigger a frame.
@@ -30,7 +28,7 @@ void main() {
 }
 
 class TestCounter extends StatefulWidget {
-  const TestCounter({Key? key}) : super(key: key);
+  const TestCounter({super.key});
 
   @override
   _TestCounterState createState() => _TestCounterState();

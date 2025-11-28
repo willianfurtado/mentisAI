@@ -30,15 +30,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_sign_in: ^7.2.0
+  #google_sign_in: ^7.2.0 //teste sem o google_sign_in
   firebase_core: ^4.2.1
   firebase_auth: ^6.1.2
   http: ^1.1.0 # Adicionado, caso for fazermos o uso
-  flutter_dotenv: ^5.1.0
-
+  flutter_dotenv: ^6.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  credential_manager: ^2.0.8 #teste usando o credential_manager
 
 dev_dependencies:
   flutter_test:
