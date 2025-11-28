@@ -42,6 +42,7 @@ android {
 
 apply(plugin = "com.google.gms.google-services")
 
+<<<<<<< HEAD
 //Dependencias usadas no firebase para configuração do login com o google
 dependencies{ 
     implementation platform('com.google.firebase:firebase-bom:34.5.0')
@@ -52,6 +53,8 @@ dependencies{
 }
 
 
+=======
+>>>>>>> 8b8d95f8b6cf950e5072d6b505f8d5bef0b4dac7
 flutter {
     source = "../.."
 }

@@ -25,8 +25,8 @@ class _LoginState extends State<Login> {
         _isLoading = true;
       });
 
-      // Passo A: Inicializar o Credential Manager (Necessário no Android)
-      // O 'googleClientId' deve ser o seu "ID do cliente da Web" do Console do Google Cloud/Firebase.
+      // Inicializar o Credential Manager (Necessário no Android)
+      // O 'googleClientId' ahora é o "ID do cliente da Web" do Console do Google Cloud/Firebase.
       await _credentialManager.init(
         preferImmediatelyAvailableCredentials: true,
         googleClientId:
@@ -286,13 +286,13 @@ class _LoginState extends State<Login> {
 
                 const SizedBox(height: 30),
 
-                // Botão Entrar com o Google - CORRIGIDO
+                // Botão Entrar com o Google, falta a imagem nos assets ao executar o programa;
                 SizedBox(
                   height: 50,
                   child: OutlinedButton.icon(
                     onPressed: _isLoading
                         ? null
-                        : _handleGoogleSignIn, // ← Este é o método que estava faltando
+                        : _handleGoogleSignIn, // aplicação do handle no OnPressed
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black87,
                       backgroundColor: Colors.white,

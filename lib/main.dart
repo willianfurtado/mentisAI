@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Importante para verificar o status
+import 'package:firebase_auth/firebase_auth.dart'; // Importante para verificar o status;
 import 'package:mentis_ai/firebase_options.dart';
 import 'package:mentis_ai/screens/login.dart';
 import 'package:mentis_ai/screens/home.dart';
@@ -11,7 +11,7 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
 
-  // Inicializa Firebase
+  // Inicializa Firebase;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -36,7 +36,7 @@ class MentisApp extends StatelessWidget {
         //   stream: FirebaseAuth.instance.authStateChanges(),
         //   builder: (context, snapshot) {
         //     // 1. Enquanto verifica, pode mostrar um loading (opcional)
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) { //não está pronto ainda
         //       return const Scaffold(
         //         body: Center(child: CircularProgressIndicator()),
         //       );
