@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; //usando Firebase agora no Home;
+// import 'package:firebase_auth/firebase_auth.dart'; //usando Firebase agora no Home;
 import 'package:mentis_ai/screens/widgets/metrics_card.dart';
 import 'package:mentis_ai/screens/widgets/date-navigator.dart';
 
@@ -12,32 +12,32 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // Método simples para deslogar
-  Future<void> _signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      print('Erro ao sair: $e');
-    }
-  }
+  // Future<void> _signOut() async {
+  //   try {
+  //     await FirebaseAuth.instance.signOut();
+  //   } catch (e) {
+  //     print('Erro ao sair: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    // final user = FirebaseAuth.instance.currentUser;
 
     // Pega o nome ou usa um padrão dependendo se o usuário está logado;
-    final displayName = user?.displayName ?? "Visitante";
+    // final displayName = user?.displayName ?? "Visitante";
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: _signOut,
-            icon: const Icon(Icons.logout, color: Colors.red),
-            tooltip: "Sair",
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     // onPressed: _signOut,
+        //     icon: const Icon(Icons.logout, color: Colors.red),
+        //     tooltip: "Sair",
+        //   ),
+        // ],
       ),
       body: SafeArea(
         child: Padding(
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
                 style: TextStyle(fontSize: 22, color: Colors.grey),
               ),
               Text(
-                displayName,
+                'Willian',
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,

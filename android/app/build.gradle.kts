@@ -34,18 +34,17 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug" )
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-rules.pro'
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }
 
 apply(plugin = "com.google.gms.google-services")
 
-<<<<<<< HEAD
 //Dependencias usadas no firebase para configuração do login com o google
 dependencies{ 
-    implementation platform('com.google.firebase:firebase-bom:34.5.0')
+    implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
     implementation("androidx.credentials:credentials:1.6.0-beta03")
@@ -53,8 +52,6 @@ dependencies{
 }
 
 
-=======
->>>>>>> 8b8d95f8b6cf950e5072d6b505f8d5bef0b4dac7
 flutter {
     source = "../.."
 }

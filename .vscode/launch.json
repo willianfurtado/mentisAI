@@ -19,6 +19,12 @@
           "ignoreFailures": true
         }
       ]
+    },
+
+    {
+      "name": "Flutter",
+      "request": "launch",
+      "type": "dart",
     }
   ]
 }

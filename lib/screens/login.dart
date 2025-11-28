@@ -135,7 +135,7 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/logo_mentisAI.png',
+                        'assets/images/mentis.png',
                         height: 300.0,
                         width: 300.0,
                       ),
