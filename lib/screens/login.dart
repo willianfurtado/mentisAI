@@ -60,7 +60,7 @@ class Login extends StatelessWidget {
                       height: 24.0,
                     ),
                     label: const Text(
-                      'Entrar com o Google',
+                      'Entrar com o GoogleLL',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
