@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:mentis_ai/firebase_options.dart';
 // import 'package:mentis_ai/screens/login.dart';
 import 'package:mentis_ai/screens/home.dart';
+import 'package:mentis_ai/screens/login.dart';
 // import 'package:mentis_ai/screens/login.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -33,7 +34,7 @@ class MentisApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         ),
         // O StreamBuilder é o "porteiro". Ele vigia o Firebase Auth.
-        home: Home(),//StreamBuilder<User?>(
+        home: Login(),//StreamBuilder<User?>(
         //   stream: FirebaseAuth.instance.authStateChanges(),
         //   builder: (context, snapshot) {
         //     // 1. Enquanto verifica, pode mostrar um loading (opcional)
