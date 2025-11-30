@@ -14,7 +14,7 @@ class RainbowProgressIndicator extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: const Size(200, 100), // Define o tamanho do espaço de desenho
+      size: const Size(200, 100), 
       painter: ArcProgressPainter(
         values: values,
         colors: colors,
@@ -31,42 +31,33 @@ class ArcProgressPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Ponto central para desenhar o arco (Base central inferior)
     final center = Offset(size.width / 2, size.height); 
     
-    // Raio do primeiro arco
     double radius = size.width / 2;
 
-    // Ângulos de início e fim do arco
-    // Começa na esquerda (180 graus ou pi radianos) e termina na direita (0 graus)
-    const double startAngle = pi;
-    const double sweepAngle = pi; // O arco é meia-circunferência (180 graus)
-
-    // 1. Desenhar os Arcos de Fundo (cinza) para mostrar o progresso máximo
+    const double startAngle = pi; //ângulo inicial (180 graus)
+    const double sweepAngle = pi; //ângulo de progresso (180 -> 360 graus)
     for (int i = 0; i < values.length; i++) {
+      //estilização do arco de plano de fundo
       final backgroundPaint = Paint()
-        ..color = Colors.grey.withOpacity(0.2) // Cor de fundo (cinza claro)
+        ..color = Colors.grey.withOpacity(0.2) 
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 12.0 // Largura do arco
+        ..strokeWidth = 12.0 
         ..strokeCap = StrokeCap.round;
 
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
         startAngle,
         sweepAngle,
-        false, // false: não conecta o arco ao centro
+        false, 
         backgroundPaint,
       );
 
-      // Aumenta o raio para o próximo arco (para que ele fique externo ao anterior)
       radius -= 15.0; 
     }
 
-    // 2. Desenhar os Arcos de Progresso (coloridos)
-    // Redefinir o raio inicial
     radius = size.width / 2; 
     
-    // Inverter a ordem para desenhar do arco mais externo para o interno (para sobreposição)
     for (int i = 0; i < values.length; i++) {
       final progressPaint = Paint()
         ..color = colors[i] 
@@ -74,7 +65,6 @@ class ArcProgressPainter extends CustomPainter {
         ..strokeWidth = 12.0
         ..strokeCap = StrokeCap.round;
 
-      // O ângulo de varredura é o valor de progresso (0.0 a 1.0) multiplicado por PI
       final currentSweepAngle = sweepAngle * values[i]; 
 
       canvas.drawArc(
@@ -85,14 +75,12 @@ class ArcProgressPainter extends CustomPainter {
         progressPaint,
       );
       
-      // Aumenta o raio para o próximo arco
       radius -= 15.0; 
     }
   }
 
   @override
   bool shouldRepaint(covariant ArcProgressPainter oldDelegate) {
-    // Repinta se os valores mudarem
     return oldDelegate.values != values || oldDelegate.colors != colors;
   }
 }
