@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart'; //usando Firebase agora no Home;
 import 'package:mentis_ai/screens/widgets/metrics_card.dart';
 import 'package:mentis_ai/screens/widgets/date-navigator.dart';
+import 'package:mentis_ai/screens/widgets/rainbow-progress-indicator.dart';
+import 'package:mentis_ai/utils/app-colors.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,6 +28,17 @@ class _HomeState extends State<Home> {
 
     // Pega o nome ou usa um padrão dependendo se o usuário está logado;
     // final displayName = user?.displayName ?? "Visitante";
+
+    final List<double> progressValues = [0.8, 0.7, 0.5, 0.4, 0.2];
+
+    // As cores para cada arco (de fora para dentro)
+    final List<Color> arcColors = [
+      AppColors.supportGreen1, // Exemplo de cor verde escura
+      AppColors.supportGreen2, // Exemplo de cor verde
+      const Color(0xFF00BFFF), // Exemplo de cor azul
+      const Color(0xFF3CB371), // Exemplo de cor verde
+      const Color(0xFF90EE90), // Exemplo de cor verde clara
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -65,6 +78,13 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const DateNavigator(),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: RainbowProgressIndicator(
+                        values: progressValues,
+                        colors: arcColors,
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     const Text(
                       'Métricas de atividades',
