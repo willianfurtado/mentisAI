@@ -12,13 +12,12 @@ class EvolutionCards extends StatelessWidget {
     return Container(
       height: 110,
       width: 170,
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.white,
         border: Border.all(color: Colors.grey, width: 1.0),
         borderRadius: BorderRadius.circular(16.0),
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,7 +28,7 @@ class EvolutionCards extends StatelessWidget {
               Container(
                 height: 50,
                 width: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.blue900,
                   shape: BoxShape.circle,
                 ),
@@ -62,7 +61,7 @@ class EvolutionCards extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.blue900,

@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_auth/firebase_auth.dart'; // Importante para verificar o status;
-import 'package:mentis_ai/firebase_options.dart';
-// import 'package:mentis_ai/screens/login.dart';
-import 'package:mentis_ai/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/login.dart';
-// import 'package:mentis_ai/screens/login.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mentis_ai/screens/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await dotenv.load(fileName: ".env");
-
-  // Inicializa Firebase;
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  // Inicializar Firebase apenas em Android/iOS (têm google-services.json ou GoogleService-Info.plist)
+  // No Windows, Web e Desktop, Firebase não é necessário para este teste
+  if (defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS) {
+    try {
+      await Firebase.initializeApp();
+    } catch (e) {
+      debugPrint('⚠️ Firebase initialization failed on mobile: $e');
+    }
+  } else {
+    // Em Desktop/Web, desabilitar Firebase de forma segura
+    try {
+      // Dummy init para evitar erros de plugins
+      debugPrint('ℹ️ Firebase skipped on ${defaultTargetPlatform.name}');
+    } catch (e) {
+      debugPrint('⚠️ Error skipping Firebase: $e');
+    }
+  }
 
   runApp(const MentisApp());
 }
@@ -27,31 +36,32 @@ class MentisApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'MentisAI',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        ),
-        // O StreamBuilder é o "porteiro". Ele vigia o Firebase Auth.
-        home: Login(),//StreamBuilder<User?>(
-        //   stream: FirebaseAuth.instance.authStateChanges(),
-        //   builder: (context, snapshot) {
-        //     // 1. Enquanto verifica, pode mostrar um loading (opcional)
-        //     if (snapshot.connectionState == ConnectionState.waiting) { //não está pronto ainda
-        //       return const Scaffold(
-        //         body: Center(child: CircularProgressIndicator()),
-        //       );
-        //     }
+      title: 'MentisAI',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+      ),
+      // O StreamBuilder é o "porteiro". Ele vigia o Firebase Auth.
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          // Enquanto verifica, mostrar loading
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
 
-        //     // 2. Se tem dados (usuário logado), vai para Home
-        //     if (snapshot.hasData) {
-        //       return const Home();
-        //       // Nota: Se sua Home recebia parâmetros antigos, remova-os.
-        //       // A Home agora deve pegar o usuário via FirebaseAuth.instance.currentUser
-        //     }
-        //   },
-        // ),
-        );
+          // Se tem dados (usuário logado), vai para Home
+          if (snapshot.hasData) {
+            return const Home();
+          }
+
+          // Senão, mostra Login
+          return const Login();
+        },
+      ),
+    );
   }
 }

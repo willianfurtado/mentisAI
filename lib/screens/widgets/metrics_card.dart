@@ -19,20 +19,19 @@ class MetricsCard extends StatelessWidget {
     return Container(
       height: 107,
       width: 170,
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(color: Colors.grey, width: 1.0),
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Calorias',
                 style: TextStyle(
                   fontSize: 16,
@@ -51,7 +50,6 @@ class MetricsCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-
           Text(
             unit,
             style: TextStyle(

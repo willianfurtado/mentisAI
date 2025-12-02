@@ -14,8 +14,7 @@ class RecomendationCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(color: Colors.grey, width: 1.0),
       ),
-
-      child: Column(
+      child: const Column(
         children: [
           Text(
             'Recomendações',
