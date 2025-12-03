@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mentis_ai/utils/app-colors.dart'; 
-import 'package:mentis_ai/utils/autentication.dart';
+// import 'package:mentis_ai/utils/autentication.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -42,17 +42,8 @@ class Login extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   child: OutlinedButton.icon(
-                    onPressed: () async {
-                      // chama autenticação com Google
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (_) =>
-                            const Center(child: CircularProgressIndicator()),
-                      );
-                      await Authentication.signInWithGoogle(context: context);
-                      if (context.mounted)
-                        Navigator.of(context, rootNavigator: true).pop();
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/evol');
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.black900,
