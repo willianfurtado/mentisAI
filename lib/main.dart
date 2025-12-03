@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/evolution_system.dart';
 import 'package:mentis_ai/screens/login.dart';
 import 'package:mentis_ai/screens/home.dart';

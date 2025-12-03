@@ -27,7 +27,6 @@ class BottomNavBar extends StatelessWidget {
           label: 'Perfil',
         ),
       ],
-      // 🎯 Configurações de Estilo
       currentIndex: currentIndex,
       selectedItemColor: Colors.blue, // Cor do ícone selecionado
       unselectedItemColor: Colors.grey, // Cor dos ícones não selecionados

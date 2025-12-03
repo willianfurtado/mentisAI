@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentis_ai/screens/evolution_system.dart';
 import 'package:mentis_ai/screens/screening_system.dart';
-import 'package:mentis_ai/screens/widgets/heart-rate-bar-char.dart';
+// import 'package:mentis_ai/screens/widgets/heart-rate-bar-char.dart';
 import 'package:mentis_ai/screens/widgets/bottom-navbar.dart';
 import 'package:mentis_ai/screens/widgets/metrics_card-heart.dart';
 import 'package:mentis_ai/screens/widgets/metrics_card.dart';
