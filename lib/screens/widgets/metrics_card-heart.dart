@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/screens/widgets/heart-rate-bar-char.dart';
 
-class MetricsCard extends StatelessWidget {
+class MetricsCardHeart extends StatelessWidget {
   final String title;
   final String value;
   final String unit;
   final IconData icon;
+  final List<double> chartData;
 
-  const MetricsCard({
+  const MetricsCardHeart({
     super.key,
     required this.title,
     required this.value,
     required this.unit,
     required this.icon,
+    required this.chartData,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 107,
+      height: 232,
       width: 170,
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(color: Colors.grey, width: 1.0),
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
-              const Text(
-                'Calorias',
+              Text(
+                'Freq Cardíaca',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -43,6 +46,11 @@ class MetricsCard extends StatelessWidget {
               Icon(icon, color: Colors.blue, size: 24),
             ],
           ),
+
+          const SizedBox(height: 10),
+          
+          HeartRateBarChart(heartRateData: chartData),
+
           Text(
             value,
             style: const TextStyle(
@@ -51,6 +59,7 @@ class MetricsCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+
           Text(
             unit,
             style: TextStyle(

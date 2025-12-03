@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart'; //usando Firebase agora no Home;
+import 'package:mentis_ai/screens/widgets/heart-rate-bar-char.dart';
+import 'package:mentis_ai/screens/widgets/bottom-navbar.dart';
+import 'package:mentis_ai/screens/widgets/metrics_card-heart.dart';
 import 'package:mentis_ai/screens/widgets/metrics_card.dart';
 import 'package:mentis_ai/screens/widgets/date-navigator.dart';
 import 'package:mentis_ai/screens/widgets/rainbow-progress-indicator.dart';
+import 'package:mentis_ai/screens/widgets/sleep-card.dart';
+import 'package:mentis_ai/screens/widgets/sleep-quality-card.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class Home extends StatefulWidget {
@@ -13,31 +17,33 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // Método simples para deslogar
-  // Future<void> _signOut() async {
-  //   try {
-  //     await FirebaseAuth.instance.signOut();
-  //   } catch (e) {
-  //     print('Erro ao sair: $e');
-  //   }
-  // }
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      //lógica de navegação
+      if (index != 0) {
+        // Exemplo: Simplesmente mostra um SnackBar se não for a Home
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Navegando para a aba ${index == 1 ? 'Métricas' : 'Perfil'}')),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final user = FirebaseAuth.instance.currentUser;
-
-    // Pega o nome ou usa um padrão dependendo se o usuário está logado;
-    // final displayName = user?.displayName ?? "Visitante";
-
     final List<double> progressValues = [0.8, 0.7, 0.5, 0.4, 0.2];
-
     // As cores para cada arco (de fora para dentro)
     final List<Color> arcColors = [
-      AppColors.supportGreen1, // Exemplo de cor verde escura
-      AppColors.supportGreen2, // Exemplo de cor verde
-      const Color(0xFF00BFFF), // Exemplo de cor azul
-      const Color(0xFF3CB371), // Exemplo de cor verde
-      const Color(0xFF90EE90), // Exemplo de cor verde clara
+      AppColors.supportGreen1,
+      AppColors.supportGreen2,
+      const Color(0xFF00BFFF),
+      const Color(0xFF3CB371),
+      const Color(0xFF90EE90),
     ];
 
     return Scaffold(
@@ -74,8 +80,7 @@ class _HomeState extends State<Home> {
 
               // Conteúdo da Home
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
                   children: [
                     const DateNavigator(),
                     const SizedBox(height: 20),
@@ -91,26 +96,59 @@ class _HomeState extends State<Home> {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
-                    const MetricsCard(
-                      title: 'Calorias',
-                      value: '2000',
-                      unit: 'kcal',
-                      icon: Icons.local_fire_department,
+                    const SizedBox(height: 10),
+                    GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 0.9,
+                      children: [
+                        const MetricsCard(
+                          title: 'Calorias',
+                          value: '2000',
+                          unit: 'kcal',
+                          icon: Icons.local_fire_department,
+                        ),
+                        const MetricsCardHeart(
+                          title: 'Frequência Cardíaca',
+                          value: '96',
+                          unit: 'bpm',
+                          icon: Icons.favorite,
+                          chartData: [80, 75, 90, 85, 96, 92],
+                        ),
+                        const MetricsCard(
+                          title: 'Passos',
+                          value: '5300',
+                          unit: 'passos',
+                          icon: Icons.directions_walk,
+                        ),
+                        const SizedBox.shrink(),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    const MetricsCard(
-                      title: 'Passos',
-                      value: '5300',
-                      unit: 'passos',
-                      icon: Icons.directions_walk,
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Dados do sono',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
+                    const SizedBox(height: 10),
+                    SleepCard(title: 'Sono'),
+                    const SizedBox(height: 10),
+                    SleepQualityCard(
+                        title: 'Qualidade do Sono',
+                        qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8])
                   ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
