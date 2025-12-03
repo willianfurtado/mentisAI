@@ -35,7 +35,7 @@ class SleepQualityBarChart extends StatelessWidget {
           barRods: [
             BarChartRodData(
               toY: value,
-              color: const Color(0xFF004D40),
+              color: const Color(0xFF0D6A8C),
               width: 15,
               borderRadius: BorderRadius.circular(7),
               backDrawRodData: BackgroundBarChartRodData(

@@ -8,11 +8,12 @@ class EvolutionSystem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+          child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
           child: Column(
             children: [
-              //Título 
+              //Título
               Center(
                 child: Text(
                   'Evolução',
@@ -20,12 +21,29 @@ class EvolutionSystem extends StatelessWidget {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
+              const SizedBox(height: 20),
 
-              EvolutionCards(title: 'Freq. Cardíaca', icon: Icons.heart_broken),
+              GridView.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 20.0,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisSpacing: 20.0,
+                padding: EdgeInsets.all(12.0),
+                children: [
+                  EvolutionCards(
+                      title: 'Freq. Cardíaca', icon: Icons.heart_broken),
+                  EvolutionCards(title: 'Passos', icon: Icons.directions_walk),
+                  EvolutionCards(title: 'Sono', icon: Icons.bed),
+                  EvolutionCards(
+                      title: 'Freq. Cardíaca',
+                      icon: Icons.local_fire_department),
+                ],
+              ),
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }

@@ -43,7 +43,7 @@ class Login extends StatelessWidget {
                   height: 50,
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/evol');
+                      Navigator.pushNamed(context, '/home');
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.black900,

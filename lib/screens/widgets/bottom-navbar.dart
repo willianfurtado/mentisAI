@@ -23,8 +23,8 @@ class BottomNavBar extends StatelessWidget {
           label: 'Métricas',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Perfil',
+          icon: Icon(Icons.calendar_month),
+          label: 'Triagem',
         ),
       ],
       currentIndex: currentIndex,

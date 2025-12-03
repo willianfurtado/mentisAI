@@ -64,7 +64,8 @@ class HomeContent extends StatelessWidget {
       const Color(0xFF90EE90),
     ];
 
-    return Padding(
+    return SafeArea(
+        child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,6 +148,6 @@ class HomeContent extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

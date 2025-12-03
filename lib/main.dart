@@ -44,7 +44,6 @@ class MentisApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      // O StreamBuilder é o "porteiro". Ele vigia o Firebase Auth.
       initialRoute: '/',
       routes: {
         '/': (context) => const Login(),
