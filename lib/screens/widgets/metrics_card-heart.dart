@@ -5,7 +5,7 @@ class MetricsCardHeart extends StatelessWidget {
   final String title;
   final String value;
   final String unit;
-  final IconData icon;
+  final Widget icon;
   final List<double> chartData;
 
   const MetricsCardHeart({
@@ -43,7 +43,7 @@ class MetricsCardHeart extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              Icon(icon, color: Colors.blue, size: 24),
+              icon,
             ],
           ),
 

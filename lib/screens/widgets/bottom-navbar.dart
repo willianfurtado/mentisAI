@@ -28,8 +28,8 @@ class BottomNavBar extends StatelessWidget {
         ),
       ],
       currentIndex: currentIndex,
-      selectedItemColor: Colors.blue, // Cor do ícone selecionado
-      unselectedItemColor: Colors.grey, // Cor dos ícones não selecionados
+      selectedItemColor: Colors.blue, 
+      unselectedItemColor: Colors.grey,
       backgroundColor: Colors.white,
       onTap: onTap,
     );

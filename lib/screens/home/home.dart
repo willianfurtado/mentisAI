@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mentis_ai/screens/evolutionSystem/main.dart';
 import 'package:mentis_ai/screens/screeningSystem/screening_system.dart';
 import 'package:mentis_ai/screens/widgets/bottom-navbar.dart';
@@ -20,7 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _screenOptions = <Widget>[
     const HomeContent(),
     const EvolutionSystem(),
     const ScreeeningSystem(),
@@ -35,11 +36,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      // ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: _screenOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -53,13 +50,12 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<double> progressValues = [0.8, 0.7, 0.5, 0.4, 0.2];
+    final List<double> progressValues = [0.8, 0.7, 0.5, 0.4];
     final List<Color> arcColors = [
-      AppColors.supportGreen1,
+      AppColors.blue800,
       AppColors.supportGreen2,
-      const Color(0xFF00BFFF),
-      const Color(0xFF3CB371),
-      const Color(0xFF90EE90),
+      AppColors.blue700,
+      AppColors.supportGreen2,
     ];
 
     return SafeArea(
@@ -72,9 +68,9 @@ class HomeContent extends StatelessWidget {
             'Olá,',
             style: TextStyle(fontSize: 22, color: Colors.grey),
           ),
-          Text(
+          const Text(
             'Willian',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -87,14 +83,14 @@ class HomeContent extends StatelessWidget {
             child: ListView(
               children: [
                 const DateNavigator(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 Center(
                   child: RainbowProgressIndicator(
                     values: progressValues,
                     colors: arcColors,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 const Text(
                   'Métricas de atividades',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -108,24 +104,33 @@ class HomeContent extends StatelessWidget {
                   crossAxisSpacing: 10,
                   childAspectRatio: 0.9,
                   children: [
-                    const MetricsCard(
+                    MetricsCard(
                       title: 'Calorias',
                       value: '2000',
                       unit: 'kcal',
-                      icon: Icons.local_fire_department,
+                      iconWidget: SvgPicture.asset(
+                        'assets/images/fire.svg',
+                        height: 30,
+                      ),
                     ),
-                    const MetricsCardHeart(
+                    MetricsCardHeart(
                       title: 'Frequência Cardíaca',
                       value: '96',
                       unit: 'bpm',
-                      icon: Icons.favorite,
-                      chartData: [80, 75, 90, 85, 96, 92],
+                      icon: SvgPicture.asset(
+                        'assets/images/heart-pulse.svg',
+                        height: 30,
+                      ),
+                      chartData: const [80, 75, 90, 85, 96, 92],
                     ),
-                    const MetricsCard(
+                    MetricsCard(
                       title: 'Passos',
                       value: '5300',
                       unit: 'passos',
-                      icon: Icons.directions_walk,
+                      iconWidget: SvgPicture.asset(
+                        'assets/images/person-walking.svg',
+                        height: 30,
+                      ),
                     ),
                     const SizedBox.shrink(),
                   ],
@@ -136,12 +141,19 @@ class HomeContent extends StatelessWidget {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                SleepCard(title: 'Sono'),
+                SleepCard(
+                  title: 'Sono',
+                  duration: '6H',
+                  iconWidget: SvgPicture.asset(
+                    'assets/images/moon.svg',
+                    height: 18,
+                  ),
+                ),
                 const SizedBox(height: 10),
-                SleepQualityCard(
+                const SleepQualityCard(
                     title: 'Qualidade do Sono',
                     qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8])
-              ],
+              ], 
             ),
           ),
         ],

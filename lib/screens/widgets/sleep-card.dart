@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentis_ai/screens/widgets/sleep-bar-chart.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class SleepCard extends StatelessWidget {
   final String title;
+  final String duration;
+  final Widget iconWidget;
 
   const SleepCard({
     super.key,
     required this.title,
+    required this.duration,
+    required this.iconWidget,
   });
 
   @override
@@ -15,7 +20,7 @@ class SleepCard extends StatelessWidget {
     return Container(
       height: 69,
       width: 375,
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.0),
@@ -32,7 +37,7 @@ class SleepCard extends StatelessWidget {
               //Lado esquerdo
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Sono',
                     style: TextStyle(
                       fontSize: 16,
@@ -40,14 +45,14 @@ class SleepCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 4),
-                  const Icon(Icons.bed, color: AppColors.blue800, size: 24),
+                  iconWidget,
                 ],
               ),
 
               //Duração
               Text(
-                '6H',
-                style: TextStyle(
+                duration,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -56,7 +61,7 @@ class SleepCard extends StatelessWidget {
           ),
 
           //Barra de progresso
-          SleepBarChart(progressRatio: 0.6),
+          const SleepBarChart(progressRatio: 0.6),
         ],
       ),
     );

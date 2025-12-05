@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/utils/app-colors.dart';
 
 class MetricsCard extends StatelessWidget {
   final String title;
   final String value;
   final String unit;
-  final IconData icon;
+  final Widget iconWidget;
 
   const MetricsCard({
     super.key,
     required this.title,
     required this.value,
     required this.unit,
-    required this.icon,
+    required this.iconWidget,
   });
 
   @override
@@ -31,7 +32,6 @@ class MetricsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
               const Text(
                 'Calorias',
                 style: TextStyle(
@@ -40,23 +40,32 @@ class MetricsCard extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              Icon(icon, color: Colors.blue, size: 24),
+              iconWidget,
             ],
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            unit,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[400],
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    value,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black900,
+                    ),
+                  ),
+                  Text(
+                    unit,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

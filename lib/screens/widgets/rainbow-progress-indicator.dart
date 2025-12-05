@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class RainbowProgressIndicator extends StatelessWidget{
+class RainbowProgressIndicator extends StatelessWidget {
   final List<double> values;
   final List<Color> colors;
 
   const RainbowProgressIndicator({
     super.key,
-    required this.values, 
-    required this.colors, 
+    required this.values,
+    required this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: const Size(200, 100), 
+      size: const Size(250, 100),
       painter: ArcProgressPainter(
         values: values,
         colors: colors,
@@ -31,8 +31,8 @@ class ArcProgressPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height); 
-    
+    final center = Offset(size.width / 2, size.height);
+
     double radius = size.width / 2;
 
     const double startAngle = pi; //ângulo inicial (180 graus)
@@ -40,32 +40,32 @@ class ArcProgressPainter extends CustomPainter {
     for (int i = 0; i < values.length; i++) {
       //estilização do arco de plano de fundo
       final backgroundPaint = Paint()
-        ..color = Colors.grey.withOpacity(0.2) 
+        ..color = Colors.grey.withOpacity(0.2)
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 12.0 
+        ..strokeWidth = 12.0
         ..strokeCap = StrokeCap.round;
 
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
         startAngle,
         sweepAngle,
-        false, 
+        false,
         backgroundPaint,
       );
 
-      radius -= 15.0; 
+      radius -= 19.0;
     }
 
-    radius = size.width / 2; 
-    
+    radius = size.width / 2;
+
     for (int i = 0; i < values.length; i++) {
       final progressPaint = Paint()
-        ..color = colors[i] 
+        ..color = colors[i]
         ..style = PaintingStyle.stroke
         ..strokeWidth = 12.0
         ..strokeCap = StrokeCap.round;
 
-      final currentSweepAngle = sweepAngle * values[i]; 
+      final currentSweepAngle = sweepAngle * values[i];
 
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
@@ -74,8 +74,8 @@ class ArcProgressPainter extends CustomPainter {
         false,
         progressPaint,
       );
-      
-      radius -= 15.0; 
+
+      radius -= 19.0;
     }
   }
 
