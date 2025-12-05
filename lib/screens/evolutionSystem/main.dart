@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentis_ai/screens/widgets/evolution-cards.dart';
+import 'package:mentis_ai/screens/widgets/evolution-line-chart.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class EvolutionSystem extends StatelessWidget {
   const EvolutionSystem({super.key});
@@ -22,6 +24,22 @@ class EvolutionSystem extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
+
+              EvolutionLineChart(
+                dataSpots: const [
+                  FlSpot(0, 10.0),
+                  FlSpot(1, 17.5),
+                  FlSpot(2, 25.0),
+                ],
+                // Rótulos correspondentes ao eixo X
+                bottomLabels: const [
+                  '8 de jul.',
+                  '9 de jul.',
+                  '10 de jul.',
+                ],
+                // O valor mais alto na escala Y (25 mil)
+                maxYValue: 25.0,
+              ),
 
               GridView.count(
                 crossAxisCount: 2,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/evolution_system.dart';
-import 'package:mentis_ai/screens/screening_system.dart';
-// import 'package:mentis_ai/screens/widgets/heart-rate-bar-char.dart';
+import 'package:mentis_ai/screens/evolutionSystem/main.dart';
+import 'package:mentis_ai/screens/screeningSystem/screening_system.dart';
 import 'package:mentis_ai/screens/widgets/bottom-navbar.dart';
 import 'package:mentis_ai/screens/widgets/metrics_card-heart.dart';
 import 'package:mentis_ai/screens/widgets/metrics_card.dart';
@@ -55,7 +54,6 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<double> progressValues = [0.8, 0.7, 0.5, 0.4, 0.2];
-    // As cores para cada arco (de fora para dentro)
     final List<Color> arcColors = [
       AppColors.supportGreen1,
       AppColors.supportGreen2,

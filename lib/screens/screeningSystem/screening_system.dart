@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentis_ai/screens/widgets/analysis-card.dart';
-import 'package:mentis_ai/screens/widgets/gauge-chart.dart';
+import 'package:mentis_ai/screens/widgets/cluster-gauge.dart';
 import 'package:mentis_ai/screens/widgets/screenning-recommendation-card.dart';
 
 class ScreeeningSystem extends StatelessWidget {
@@ -34,7 +34,9 @@ class ScreeeningSystem extends StatelessWidget {
                   ),
 
                   //gráfico de avaliação de cluster
-                  // GaugeChart(),
+                  ClusterGauge(
+                      clusterScore: 78.0,
+                      clusterClassification: 'Grupo de alto risco'),
                 ],
               ),
               const SizedBox(height: 150),
