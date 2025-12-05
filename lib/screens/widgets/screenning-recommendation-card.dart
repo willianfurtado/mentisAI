@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/utils/app-colors.dart';
 
 class RecomendationCard extends StatelessWidget {
   const RecomendationCard({super.key});
@@ -10,9 +11,9 @@ class RecomendationCard extends StatelessWidget {
       height: 146,
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: AppColors.gray300,
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(color: Colors.grey, width: 1.0),
+        // border: Border.all(color: Colors.grey, width: 1.0),
       ),
       child: const Column(
         children: [
@@ -20,8 +21,8 @@ class RecomendationCard extends StatelessWidget {
             'Recomendações',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.normal,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
               color: Colors.black,
             ),
           ),
@@ -33,7 +34,7 @@ class RecomendationCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.blue900,
               ),
             ),
           ),

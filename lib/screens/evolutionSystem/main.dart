@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mentis_ai/screens/widgets/evolution-cards.dart';
-import 'package:mentis_ai/screens/widgets/evolution-line-chart.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class EvolutionSystem extends StatelessWidget {
   const EvolutionSystem({super.key});
@@ -16,14 +15,13 @@ class EvolutionSystem extends StatelessWidget {
           child: Column(
             children: [
               //Título
-              Center(
-                child: Text(
-                  'Evolução',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+              const Text(
+                'Evolução',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+
+              const SizedBox(height: 40),
 
               GridView.count(
                 crossAxisCount: 2,
@@ -31,15 +29,34 @@ class EvolutionSystem extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 20.0,
-                padding: EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(6.0),
+                childAspectRatio: 1.2,
                 children: [
                   EvolutionCards(
-                      title: 'Freq. Cardíaca', icon: Icons.heart_broken),
-                  EvolutionCards(title: 'Passos', icon: Icons.directions_walk),
-                  EvolutionCards(title: 'Sono', icon: Icons.bed),
+                    title: 'Freq. Cardíaca',
+                    iconWidget: SvgPicture.asset(
+                      'assets/images/heart-white.svg',
+                    ),
+                  ),
                   EvolutionCards(
-                      title: 'Freq. Cardíaca',
-                      icon: Icons.local_fire_department),
+                    title: 'Sono',
+                    iconWidget: SvgPicture.asset(
+                      'assets/images/moon-white.svg',
+                    ),
+                  ),
+                  EvolutionCards(
+                    title: 'Calorias',
+                    iconWidget: SvgPicture.asset(
+                      'assets/images/fire-white.svg',
+                    ),
+                  ),
+                  EvolutionCards(
+                    title: 'Passos',
+                    iconWidget: SvgPicture.asset(
+                      'assets/images/walk-white.svg',
+                      
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -47,5 +64,5 @@ class EvolutionSystem extends StatelessWidget {
         ),
       )),
     );
-  } 
+  }
 }

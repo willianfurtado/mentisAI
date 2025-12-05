@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/screens/evolutionSystem/evolution-system-steps.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -50,6 +51,7 @@ class MentisApp extends StatelessWidget {
         '/home': (context) => const Home(),
         '/screening-system': (context) => const ScreeeningSystem(),
         '/evolution-system': (context) => const EvolutionSystem(),
+        '/evolution-system-steps': (context) => const EvolutionSystemSteps(),
       },
       // home: StreamBuilder<User?>(
       //   stream: FirebaseAuth.instance.authStateChanges(),

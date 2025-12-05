@@ -155,6 +155,7 @@ class HomeContent extends StatelessWidget {
                     qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8])
               ], 
             ),
+            
           ),
         ],
       ),

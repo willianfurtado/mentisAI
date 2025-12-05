@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ClusterGauge extends StatelessWidget {
-  // A pontuação atual do cluster (de 0 a 100)
   final double clusterScore;
-  // O texto que representa a classificação (ex: "Alto Risco")
   final String clusterClassification;
 
   const ClusterGauge({
@@ -19,8 +17,7 @@ class ClusterGauge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(20.0), // Borda arredondada, como no design
+        borderRadius: BorderRadius.circular(32.0),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
@@ -28,19 +25,19 @@ class ClusterGauge extends StatelessWidget {
             spreadRadius: 2,
           ),
         ],
+        border: Border.all(color: Colors.grey, width: 1.0),
       ),
       child: Column(
         children: [
           // Título superior
           const Text(
             'Sua avaliação de bem-estar',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 5),
 
-          // 🎯 O WIDGET PRINCIPAL DO MEDIDOR
           SizedBox(
-            height: 180,
+            height: 170,
             child: SfRadialGauge(
               axes: <RadialAxis>[
                 RadialAxis(
@@ -49,18 +46,15 @@ class ClusterGauge extends StatelessWidget {
                   startAngle: 180, // Início (esquerda)
                   endAngle: 0, // Fim (direita)
 
-                  // Oculta elementos de escala para um visual limpo
                   showLabels: false,
                   showTicks: false,
-                  // showPointer: false,
 
-                  // Faixas de Cores (Ranges) - Laranja e Cinza
                   ranges: <GaugeRange>[
                     // Faixa Laranja (Progresso)
                     GaugeRange(
                       startValue: 0,
-                      endValue: clusterScore, // Preenchido até a pontuação
-                      color: Colors.orange.shade400, // Cor Laranja do design
+                      endValue: clusterScore,
+                      color: Colors.orange.shade400,
                       startWidth: 25,
                       endWidth: 25,
                     ),
@@ -75,16 +69,16 @@ class ClusterGauge extends StatelessWidget {
                   ],
 
                   // Marcador de Limite (O pequeno traço preto)
-                  pointers: <GaugePointer>[
-                    MarkerPointer(
-                      value: clusterScore, // Posição do traço
-                      markerHeight: 18,
-                      markerWidth: 3,
-                      markerType: MarkerType.rectangle,
-                      color: Colors.black,
-                      enableDragging: false,
-                    ),
-                  ],
+                  // pointers: <GaugePointer>[
+                  //   MarkerPointer(
+                  //     value: clusterScore, // Posição do traço
+                  //     markerHeight: 18,
+                  //     markerWidth: 3,
+                  //     markerType: MarkerType.rectangle,
+                  //     color: Colors.black,
+                  //     enableDragging: false,
+                  //   ),
+                  // ],
 
                   // Texto Central (Classificação do Cluster)
                   annotations: <GaugeAnnotation>[
@@ -97,8 +91,8 @@ class ClusterGauge extends StatelessWidget {
                           color: Colors.grey,
                         ),
                       ),
-                      angle: 90, // Posição no centro-inferior
-                      positionFactor: 0.8,
+                      angle: 90,
+                      positionFactor: 0.6,
                     ),
                   ],
                 ),

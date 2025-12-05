@@ -12,7 +12,7 @@ class AnalysisCard extends StatelessWidget {
       // width: 60,
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.green[400],
+        color: Color.fromARGB(255, 143, 218, 236),
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Center(

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
+import 'package:flutter_svg/svg.dart';
 
 class EvolutionCards extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final Widget iconWidget;
 
-  const EvolutionCards({super.key, required this.title, required this.icon});
+  const EvolutionCards(
+      {super.key, required this.title, required this.iconWidget});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110,
+      height: 100,
       width: 170,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.white,
         border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(26.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +34,9 @@ class EvolutionCards extends StatelessWidget {
                   color: AppColors.blue900,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: Colors.white, size: 30),
+                child: Center(
+                  child: iconWidget,
+                ),
               ),
 
               Container(
@@ -52,13 +56,13 @@ class EvolutionCards extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                   onPressed: () => {
-                    // Implementar lógica de ir para a página
+                    Navigator.pushNamed(context, '/evolution-system-steps'),
                   },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 18),
           Text(
             title,
             style: const TextStyle(
