@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mentis_ai/utils/app-colors.dart'; 
-// import 'package:mentis_ai/utils/autentication.dart';
+import 'package:mentis_ai/utils/app-colors.dart';
+import 'package:mentis_ai/utils/autentication.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -42,8 +42,13 @@ class Login extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   child: OutlinedButton.icon(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/home');
+                    onPressed: () async {
+                      final user = await Authentication.signInWithGoogle(
+                          context: context);
+                      if (user != null && context.mounted) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/home', (route) => false);
+                      }
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.black900,
