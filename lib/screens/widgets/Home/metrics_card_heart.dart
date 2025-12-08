@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/heart-rate-bar-char.dart';
+import 'package:mentis_ai/screens/widgets/Home/heart_rate_bar_char.dart';
 
 class MetricsCardHeart extends StatelessWidget {
   final String title;

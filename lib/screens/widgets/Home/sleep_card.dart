@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mentis_ai/screens/widgets/sleep-bar-chart.dart';
+import 'package:mentis_ai/screens/widgets/Home/sleep_bar_chart.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class SleepCard extends StatelessWidget {

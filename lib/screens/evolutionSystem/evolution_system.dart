@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mentis_ai/screens/widgets/evolution-cards.dart';
+import 'package:mentis_ai/screens/widgets/EvolutionSystem/evolution_cards.dart';
 
 class EvolutionSystem extends StatelessWidget {
   const EvolutionSystem({super.key});

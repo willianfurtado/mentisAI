@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mentis_ai/screens/evolutionSystem/main.dart';
+import 'package:mentis_ai/screens/evolutionSystem/evolution_system.dart';
 import 'package:mentis_ai/screens/screeningSystem/screening_system.dart';
-import 'package:mentis_ai/screens/widgets/bottom-navbar.dart';
-import 'package:mentis_ai/screens/widgets/metrics_card-heart.dart';
-import 'package:mentis_ai/screens/widgets/metrics_card.dart';
-import 'package:mentis_ai/screens/widgets/date-navigator.dart';
-import 'package:mentis_ai/screens/widgets/rainbow-progress-indicator.dart';
-import 'package:mentis_ai/screens/widgets/sleep-card.dart';
-import 'package:mentis_ai/screens/widgets/sleep-quality-card.dart';
+import 'package:mentis_ai/screens/widgets/bottom_navbar.dart';
+import 'package:mentis_ai/screens/widgets/Home/metrics_card_heart.dart';
+import 'package:mentis_ai/screens/widgets/Home/metrics_card.dart';
+import 'package:mentis_ai/screens/widgets/Home/date_navigator.dart';
+import 'package:mentis_ai/screens/widgets/Home/rainbow_progress_indicator.dart';
+import 'package:mentis_ai/screens/widgets/Home/sleep_card.dart';
+import 'package:mentis_ai/screens/widgets/Home/sleep_quality_card.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class Home extends StatefulWidget {
@@ -153,9 +153,8 @@ class HomeContent extends StatelessWidget {
                 const SleepQualityCard(
                     title: 'Qualidade do Sono',
                     qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8])
-              ], 
+              ],
             ),
-            
           ),
         ],
       ),

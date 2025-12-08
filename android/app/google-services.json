@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "409331129900-4o4tfim5n2vt9pnegjaqvomgpm204ohu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mentis_ai",
+            "certificate_hash": "2db56d7023e7112d1de57d06ce14c6fc2132cf00"
+          }
+        },
+        {
           "client_id": "409331129900-98qqr26dth0bvacio2a1ct84ulbp6kfq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

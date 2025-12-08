@@ -14,7 +14,7 @@ class DateNavigator extends StatelessWidget {
             //Lógica para voltar dia anterior
           },
         ),
-        Text(
+        const Text(
           'HOJE, 20 DE SETEMBRO',
           style: TextStyle(
             fontSize: 18,

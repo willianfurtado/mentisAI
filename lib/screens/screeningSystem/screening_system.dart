@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/analysis-card.dart';
-import 'package:mentis_ai/screens/widgets/cluster-gauge.dart';
-import 'package:mentis_ai/screens/widgets/screenning-recommendation-card.dart';
+import 'package:mentis_ai/screens/widgets/ScreeningSystem/analysis_card.dart';
+import 'package:mentis_ai/screens/widgets/ScreeningSystem/cluster_gauge.dart';
+import 'package:mentis_ai/screens/widgets/ScreeningSystem/screenning_recommendation_card.dart';
 
 class ScreeeningSystem extends StatelessWidget {
   const ScreeeningSystem({super.key});
