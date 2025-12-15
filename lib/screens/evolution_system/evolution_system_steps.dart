@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/EvolutionSystem/evolution_cards.dart';
-import 'package:mentis_ai/screens/widgets/EvolutionSystem/evolution_insight.dart';
-import 'package:mentis_ai/screens/widgets/EvolutionSystem/evolution_line_chart.dart';
+import 'package:mentis_ai/screens/widgets/evolution_system/evolution_cards.dart';
+import 'package:mentis_ai/screens/widgets/evolution_system/evolution_insight.dart';
+import 'package:mentis_ai/screens/widgets/evolution_system/evolution_line_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 

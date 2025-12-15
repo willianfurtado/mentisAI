@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/Home/sleep_quality_bar_chart.dart';
+import 'package:mentis_ai/screens/widgets/home/sleep_quality_bar_chart.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class SleepQualityCard extends StatelessWidget {
