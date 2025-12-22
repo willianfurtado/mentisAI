@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system.dart';
 import 'package:mentis_ai/screens/home/home_content.dart';
 import 'package:mentis_ai/screens/screening_system/screening_system.dart';
+import 'package:mentis_ai/screens/user_profile/user_profile.dart';
 import 'package:mentis_ai/screens/widgets/bottom_navbar.dart';
 
 class Home extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomeState extends State<Home> {
     const HomeContent(),
     const EvolutionSystem(),
     const ScreeeningSystem(),
+    const UserProfile(),
   ];
 
   void _onItemTapped(int index) {

@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system.dart';
+import 'package:mentis_ai/screens/user_profile/user_profile.dart';
+import 'package:mentis_ai/screens/user_profile/user_settings.dart';
 import 'package:mentis_ai/utils/autentication.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system_steps.dart';
@@ -56,6 +58,8 @@ class MentisApp extends StatelessWidget {
         '/screening-system': (context) => const ScreeeningSystem(),
         '/evolution-system': (context) => const EvolutionSystem(),
         '/evolution-system-steps': (context) => const EvolutionSystemSteps(),
+        '/user-profile': (context) => const UserProfile(),
+        '/user-settings': (context) => const UserSettings(), 
       },
       home: const Home(),
     );
