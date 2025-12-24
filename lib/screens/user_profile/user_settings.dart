@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/services/database_service.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
+import 'package:mentis_ai/models/user_data.dart';
 
 class UserSettings extends StatefulWidget {
   const UserSettings({super.key});
@@ -9,7 +11,50 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+  final TextEditingController _dateController = TextEditingController();
   final TextEditingController _watchController = TextEditingController();
+
+  String? _selectedGender;
+  String? _selectedMaritalStatus;
+  String? _selectedEducationLevel;
+  String? _selectedProfession;
+  String? _selectedIncome;
+  String? _selectedFamilyArrangement;
+  String? _selectedChildren;
+  String? _selectedResidence;
+
+  Future<void> _saveProfile() async {
+    if (_selectedGender == null || _selectedEducationLevel == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Por favor, preencha os campos obrigatórios")),
+      );
+      return;
+    }
+
+    final user = UserData(
+      id: 1,
+      gender: _selectedGender!,
+      dateOfBirth: _dateController.text,
+      maritalStatus: _selectedMaritalStatus ?? 'Não informado',
+      educationLevel: _selectedEducationLevel!,
+      profession: _selectedProfession ?? 'Não informado',
+      income: _selectedIncome ?? 'Não informado',
+      familyArrangement: _selectedFamilyArrangement ?? 'Não informado',
+      children: _selectedChildren ?? '0',
+      residence: _selectedResidence ?? 'Não informado',
+      smartwatch: _watchController.text,
+    );
+
+    await DataBaseService().saveUser(user);
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Dados salvos com sucesso!")),
+      );
+      Navigator.pop(context);
+    }
+  }
 
   @override
   void dispose() {
@@ -65,7 +110,11 @@ class _UserSettingsState extends State<UserSettings> {
                           .map(
                               (e) => DropdownMenuItem(value: e, child: Text(e)))
                           .toList(),
-                      onChanged: (val) {},
+                      onChanged: (val) {
+                        setState(() {
+                          _selectedGender = val;
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -76,8 +125,22 @@ class _UserSettingsState extends State<UserSettings> {
                         border: OutlineInputBorder(),
                         suffixIcon: Icon(Icons.calendar_today_outlined),
                       ),
-                      readOnly: true, // Abre o date picker ao clicar
-                      onTap: () {/* Sua lógica de showDatePicker */},
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime(2000),
+                          firstDate: DateTime(1940),
+                          lastDate: DateTime.now(),
+                        );
+
+                        if (pickedDate != null) {
+                          setState(() {
+                            _dateController.text =
+                                "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                          });
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -93,7 +156,11 @@ class _UserSettingsState extends State<UserSettings> {
                 items: ['Solteiro(a)', 'Casado(a)']
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                     .toList(),
-                onChanged: (val) {},
+                onChanged: (val) {
+                  setState(() {
+                    _selectedMaritalStatus = val;
+                  });
+                },
               ),
 
               const SizedBox(
@@ -143,7 +210,11 @@ class _UserSettingsState extends State<UserSettings> {
                           .map(
                               (e) => DropdownMenuItem(value: e, child: Text(e)))
                           .toList(),
-                      onChanged: (value) => {},
+                      onChanged: (val) => {
+                        setState(() {
+                          _selectedEducationLevel = val;
+                        })
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -168,7 +239,11 @@ class _UserSettingsState extends State<UserSettings> {
                           .map(
                               (e) => DropdownMenuItem(value: e, child: Text(e)))
                           .toList(),
-                      onChanged: (value) {},
+                      onChanged: (val) {
+                        setState(() {
+                          _selectedProfession = val;
+                        });
+                      },
                     ),
                   ),
                 ],
@@ -191,7 +266,11 @@ class _UserSettingsState extends State<UserSettings> {
                 ]
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                     .toList(),
-                onChanged: (val) {},
+                onChanged: (val) {
+                  setState(() {
+                    _selectedIncome = val;
+                  });
+                },
               ),
 
               const SizedBox(
@@ -236,7 +315,11 @@ class _UserSettingsState extends State<UserSettings> {
                 ]
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                     .toList(),
-                onChanged: (val) {},
+                onChanged: (val) {
+                  setState(() {
+                    _selectedFamilyArrangement = val;
+                  });
+                },
               ),
 
               const SizedBox(height: 16),
@@ -258,7 +341,11 @@ class _UserSettingsState extends State<UserSettings> {
                           .map(
                               (e) => DropdownMenuItem(value: e, child: Text(e)))
                           .toList(),
-                      onChanged: (val) {},
+                      onChanged: (val) {
+                        setState(() {
+                          _selectedChildren = val;
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -275,7 +362,11 @@ class _UserSettingsState extends State<UserSettings> {
                           .map(
                               (e) => DropdownMenuItem(value: e, child: Text(e)))
                           .toList(),
-                      onChanged: (val) {},
+                      onChanged: (val) {
+                        setState(() {
+                          _selectedResidence = val;
+                        });
+                      },
                     ),
                   ),
                 ],
@@ -314,13 +405,9 @@ class _UserSettingsState extends State<UserSettings> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    //  função de salvar
-                    print("Botão Salvar clicado!");
-                  },
+                  onPressed: _saveProfile,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color(0xFF1B4E6B), // O azul da sua marca
+                    backgroundColor: const Color(0xFF1B4E6B),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
