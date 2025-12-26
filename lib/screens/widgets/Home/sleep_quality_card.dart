@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/home/sleep_quality_bar_chart.dart';
+import 'package:mentis_ai/screens/widgets/Home/sleep_quality_bar_chart.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class SleepQualityCard extends StatelessWidget {
@@ -17,7 +17,7 @@ class SleepQualityCard extends StatelessWidget {
     return Container(
       height: 200,
       width: double.infinity,
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.0),
@@ -27,7 +27,7 @@ class SleepQualityCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),

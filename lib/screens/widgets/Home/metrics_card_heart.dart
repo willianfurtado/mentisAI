@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/home/heart_rate_bar_char.dart';
+import 'package:mentis_ai/screens/widgets/Home/heart_rate_bar_chart.dart';
 
 class MetricsCardHeart extends StatelessWidget {
   final String title;
@@ -22,20 +22,19 @@ class MetricsCardHeart extends StatelessWidget {
     return Container(
       height: 232,
       width: 170,
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(color: Colors.grey, width: 1.0),
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Freq Cardíaca',
                 style: TextStyle(
                   fontSize: 16,
@@ -46,11 +45,8 @@ class MetricsCardHeart extends StatelessWidget {
               icon,
             ],
           ),
-
           const SizedBox(height: 10),
-          
           HeartRateBarChart(heartRateData: chartData),
-
           Text(
             value,
             style: const TextStyle(
@@ -59,7 +55,6 @@ class MetricsCardHeart extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-
           Text(
             unit,
             style: TextStyle(

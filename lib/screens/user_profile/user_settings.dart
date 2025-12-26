@@ -196,7 +196,7 @@ class _UserSettingsState extends State<UserSettings> {
                   Expanded(
                     child: DropdownButtonFormField<String>(
                       isExpanded: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Nível Educacional',
                         border: OutlineInputBorder(),
                       ),
@@ -223,7 +223,7 @@ class _UserSettingsState extends State<UserSettings> {
                   Expanded(
                     child: DropdownButtonFormField<String>(
                       isExpanded: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Profissão',
                         border: OutlineInputBorder(),
                       ),

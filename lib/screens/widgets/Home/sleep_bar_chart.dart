@@ -11,7 +11,7 @@ class SleepBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 10.0,
         child: LinearProgressIndicator(
           value: progressRatio,

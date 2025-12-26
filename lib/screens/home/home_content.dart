@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mentis_ai/services/database_service.dart';
 import 'package:mentis_ai/models/metric_data.dart';
-import 'package:mentis_ai/screens/widgets/home/date_navigator.dart';
-import 'package:mentis_ai/screens/widgets/home/metrics_card.dart';
-import 'package:mentis_ai/screens/widgets/home/metrics_card_heart.dart';
-import 'package:mentis_ai/screens/widgets/home/rainbow_progress_indicator.dart';
-import 'package:mentis_ai/screens/widgets/home/sleep_card.dart';
-import 'package:mentis_ai/screens/widgets/home/sleep_quality_card.dart';
+import 'package:mentis_ai/screens/widgets/Home/date_navigator.dart';
+import 'package:mentis_ai/screens/widgets/Home/metrics_card.dart';
+import 'package:mentis_ai/screens/widgets/Home/metrics_card_heart.dart';
+import 'package:mentis_ai/screens/widgets/Home/rainbow_progress_indicator.dart';
+import 'package:mentis_ai/screens/widgets/Home/sleep_card.dart';
+import 'package:mentis_ai/screens/widgets/Home/sleep_quality_card.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class HomeContent extends StatefulWidget {

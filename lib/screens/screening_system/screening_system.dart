@@ -16,8 +16,8 @@ class ScreeeningSystem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: const Text(
+              const Center(
+                child: Text(
                   'Sistema de triagem e alerta',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -28,7 +28,7 @@ class ScreeeningSystem extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -37,7 +37,7 @@ class ScreeeningSystem extends StatelessWidget {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
 
-                        const SizedBox(
+                        SizedBox(
                           height: 20,
                         ),
                         //gráfico de avaliação de cluster
@@ -86,7 +86,7 @@ class ScreeeningSystem extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 25),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -94,7 +94,7 @@ class ScreeeningSystem extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: 15),
                         //card de recomendação
                         RecomendationCard(),
                       ],

@@ -9,16 +9,16 @@ class EvolutionInsight extends StatelessWidget {
     return Container(
       width: 362,
       height: 190,
-      padding: EdgeInsets.all(18.0),
+      padding: const EdgeInsets.all(18.0),
       decoration: BoxDecoration(
         color: AppColors.white,
         border: Border.all(color: AppColors.gray500, width: 1.0),
         borderRadius: BorderRadius.circular(32.0),
       ),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'MentisAI Insight',
             textAlign: TextAlign.start,
             style: TextStyle(
@@ -26,7 +26,7 @@ class EvolutionInsight extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 8,
           ),
           Text(

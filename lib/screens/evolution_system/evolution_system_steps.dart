@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/screens/widgets/evolution_system/evolution_cards.dart';
 import 'package:mentis_ai/screens/widgets/evolution_system/evolution_insight.dart';
 import 'package:mentis_ai/screens/widgets/evolution_system/evolution_line_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -42,14 +41,14 @@ class EvolutionSystemSteps extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              EvolutionLineChart(
+              const EvolutionLineChart(
                 dataSpots: [
                   FlSpot(0, 10.0),
                   FlSpot(1, 17.5),
                   FlSpot(2, 25.0),
                 ],
                 // Rótulos correspondentes ao eixo X
-                bottomLabels: const [
+                bottomLabels: [
                   '8 de jul.',
                   '9 de jul.',
                   '10 de jul.',
@@ -63,7 +62,7 @@ class EvolutionSystemSteps extends StatelessWidget {
               ),
 
               //container do insight
-              EvolutionInsight(),
+              const EvolutionInsight(),
             ],
           ),
         ),

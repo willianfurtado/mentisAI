@@ -76,10 +76,10 @@ class Login extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 40),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Já tem uma conta?',
                       style: TextStyle(
                         fontSize: 20,
@@ -87,7 +87,7 @@ class Login extends StatelessWidget {
                         fontFamily: 'HostGrotesk',
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 5,
                     ),
                     Text(

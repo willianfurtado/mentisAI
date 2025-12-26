@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
-import 'package:flutter_svg/svg.dart';
 
 class EvolutionCards extends StatelessWidget {
   final String title;
