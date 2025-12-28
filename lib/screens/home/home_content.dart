@@ -38,15 +38,12 @@ class _HomeContentState extends State<HomeContent> {
     _initHealthFlow();
   }
 
-  // --- INICIALIZAÇÃO SEGURA ---
   Future<void> _initHealthFlow() async {
-    // Verifica status antes de pedir para evitar o erro "Request already running"
     var status = await Permission.activityRecognition.status;
     if (!status.isGranted) {
        await Permission.activityRecognition.request();
     }
     
-    // Carrega dados
     await _loadMetricsForDate(_currentDate);
   }
 
@@ -67,7 +64,6 @@ class _HomeContentState extends State<HomeContent> {
     ];
 
     try {
-      // Solicita permissões (O pacote Health gerencia internamente se já foi concedido)
       await health.requestAuthorization(types);
 
       List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
@@ -106,12 +102,8 @@ class _HomeContentState extends State<HomeContent> {
         }
       }
 
-      // --- CORREÇÃO DAS CALORIAS (FALLBACK) ---
-      // Se o Health Connect não retornou Basal (comum no Google Fit), calculamos uma estimativa.
-      // Média estimada: 1.2 kcal/minuto (Baseado no seu print do Google Fit)
       if (basal == 0 && isToday) {
          int minutesPassed = now.difference(startTime).inMinutes;
-         // Proteção para não dar negativo ou número gigante
          if (minutesPassed > 0 && minutesPassed < 1440) {
             basal = minutesPassed * 1.2; 
          }
@@ -126,7 +118,6 @@ class _HomeContentState extends State<HomeContent> {
 
       int totalCalories = (basal + active).toInt();
 
-      // Cálculos do Gráfico (0.0 a 1.0)
       double stepProgress = (stepsTotal / _goalSteps).clamp(0.0, 1.0);
       double calProgress = (totalCalories / _goalCalories).clamp(0.0, 1.0);
       double sleepProgress = (sleepMinutes / _goalSleepMinutes).clamp(0.0, 1.0);

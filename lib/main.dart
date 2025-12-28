@@ -61,7 +61,6 @@ class MentisApp extends StatelessWidget {
     );
   }
 }
-//Fazer a verificação de autenticação, se o usuário está logado ou não;
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -81,7 +80,7 @@ class AuthGate extends StatelessWidget {
           return const Home();
         }
 
-        return const Login(); // <--- Certifique-se que o widget de login chama LoginScreen
+        return const Login();
       },
     );
   }

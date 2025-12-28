@@ -15,7 +15,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  // Opções de telas
   static final List<Widget> _screenOptions = <Widget>[
     const HomeContent(), 
     const EvolutionSystem(),

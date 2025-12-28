@@ -35,7 +35,6 @@ class UserProfile extends StatelessWidget {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              //Seção do Avatar e nome do usuário
               CircleAvatar(
                 radius: 50,
                 backgroundColor: const Color(0xFFE0E0E0),
@@ -58,7 +57,6 @@ class UserProfile extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              //Lista de cards clicáveis
               ...menuItems.map((item) {
                 return _buildMenuCard(context,
                     icon: item['icon'], title: item['title'], onTap: () {
