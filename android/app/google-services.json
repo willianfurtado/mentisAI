@@ -14,19 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "409331129900-4o4tfim5n2vt9pnegjaqvomgpm204ohu.apps.googleusercontent.com",
+          "client_id": "409331129900-j95j25vctlr5jabn5s10j2nbpmk40s4u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.mentis_ai",
-            "certificate_hash": "2db56d7023e7112d1de57d06ce14c6fc2132cf00"
-          }
-        },
-        {
-          "client_id": "409331129900-98qqr26dth0bvacio2a1ct84ulbp6kfq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.mentis_ai",
-            "certificate_hash": "97230229b973ea3849d690de98e28bd06e6f479e"
+            "certificate_hash": "eeb93a5810de37de746a3d75c1a69feef76c7250"
           }
         },
         {

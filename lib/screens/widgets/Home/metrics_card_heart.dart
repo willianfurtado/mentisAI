@@ -20,9 +20,9 @@ class MetricsCardHeart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 232,
+      height: 232, 
       width: 170,
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
@@ -34,19 +34,33 @@ class MetricsCardHeart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Freq Cardíaca',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+              const Flexible( 
+                child: Text(
+                  'Freq Cardíaca', 
+                  style: TextStyle(
+                    fontSize: 14, 
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis, 
                 ),
               ),
               icon,
             ],
           ),
-          const SizedBox(height: 10),
-          HeartRateBarChart(heartRateData: chartData),
+          
+          const SizedBox(height: 5), 
+
+          Expanded(
+            child: Center(
+              child: AspectRatio(
+                 aspectRatio: 1.5, 
+                 child: HeartRateBarChart(heartRateData: chartData),
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 5), 
           Text(
             value,
             style: const TextStyle(
@@ -58,7 +72,7 @@ class MetricsCardHeart extends StatelessWidget {
           Text(
             unit,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.w600,
               color: Colors.grey[400],
             ),

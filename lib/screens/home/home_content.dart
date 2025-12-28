@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mentis_ai/services/database_service.dart';
-import 'package:mentis_ai/models/metric_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:health/health.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:mentis_ai/screens/widgets/Home/date_navigator.dart';
 import 'package:mentis_ai/screens/widgets/Home/metrics_card.dart';
 import 'package:mentis_ai/screens/widgets/Home/metrics_card_heart.dart';
@@ -18,30 +19,138 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
-  DateTime _currentDate = DateTime.now()
-      .toUtc()
-      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0);
-  MetricData? _dailyMetrics;
-  final dbService = DataBaseService();
+  DateTime _currentDate = DateTime.now();
+  
+  String _steps = "0";
+  String _calories = "0"; 
+  String _heartRate = "--";
+  String _sleepDuration = "--";
+
+  List<double> _progressValues = [0.0, 0.0, 0.0, 0.0];
+
+  final double _goalSteps = 6000;
+  final double _goalCalories = 2000;
+  final double _goalSleepMinutes = 480; 
 
   @override
   void initState() {
     super.initState();
-    _loadInitialData();
+    _initHealthFlow();
   }
 
-  Future<void> _loadInitialData() async {
-    await dbService.seedDatabase();
+  // --- INICIALIZAÇÃO SEGURA ---
+  Future<void> _initHealthFlow() async {
+    // Verifica status antes de pedir para evitar o erro "Request already running"
+    var status = await Permission.activityRecognition.status;
+    if (!status.isGranted) {
+       await Permission.activityRecognition.request();
+    }
+    
+    // Carrega dados
     await _loadMetricsForDate(_currentDate);
   }
 
   Future<void> _loadMetricsForDate(DateTime date) async {
-    final dateString = date.toIso8601String().split('T').first;
-    final data = await dbService.getMetricByDate(dateString);
-    setState(() {
-      _dailyMetrics = data;
-      _currentDate = date;
-    });
+    final Health health = Health();
+
+    final startTime = DateTime(date.year, date.month, date.day);
+    final now = DateTime.now();
+    final isToday = date.year == now.year && date.month == now.month && date.day == now.day;
+    final endTime = isToday ? now : DateTime(date.year, date.month, date.day, 23, 59, 59);
+
+    var types = [
+      HealthDataType.STEPS,
+      HealthDataType.ACTIVE_ENERGY_BURNED,
+      HealthDataType.BASAL_ENERGY_BURNED, 
+      HealthDataType.HEART_RATE,
+      HealthDataType.SLEEP_SESSION,
+    ];
+
+    try {
+      // Solicita permissões (O pacote Health gerencia internamente se já foi concedido)
+      await health.requestAuthorization(types);
+
+      List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
+        startTime: startTime,
+        endTime: endTime,
+        types: types,
+      );
+
+      healthData = health.removeDuplicates(healthData);
+
+      double basal = 0.0;
+      double active = 0.0;
+      int stepsTotal = 0;
+      int lastHeartRate = 0;
+      int sleepMinutes = 0;
+
+      for (var point in healthData) {
+        if (point.value is NumericHealthValue) {
+          final val = (point.value as NumericHealthValue).numericValue;
+
+          if (point.type == HealthDataType.STEPS) {
+            stepsTotal += val.toInt();
+          } 
+          else if (point.type == HealthDataType.ACTIVE_ENERGY_BURNED) {
+            active += val.toDouble();
+          }
+          else if (point.type == HealthDataType.BASAL_ENERGY_BURNED) {
+            basal += val.toDouble();
+          }
+          else if (point.type == HealthDataType.HEART_RATE) {
+            lastHeartRate = val.toInt();
+          }
+          else if (point.type == HealthDataType.SLEEP_SESSION) {
+             sleepMinutes += val.toInt();
+          }
+        }
+      }
+
+      // --- CORREÇÃO DAS CALORIAS (FALLBACK) ---
+      // Se o Health Connect não retornou Basal (comum no Google Fit), calculamos uma estimativa.
+      // Média estimada: 1.2 kcal/minuto (Baseado no seu print do Google Fit)
+      if (basal == 0 && isToday) {
+         int minutesPassed = now.difference(startTime).inMinutes;
+         // Proteção para não dar negativo ou número gigante
+         if (minutesPassed > 0 && minutesPassed < 1440) {
+            basal = minutesPassed * 1.2; 
+         }
+      }
+
+      String sleepStr = "--";
+      if (sleepMinutes > 0) {
+        final hours = sleepMinutes ~/ 60;
+        final mins = sleepMinutes % 60;
+        sleepStr = "${hours}h ${mins}m";
+      }
+
+      int totalCalories = (basal + active).toInt();
+
+      // Cálculos do Gráfico (0.0 a 1.0)
+      double stepProgress = (stepsTotal / _goalSteps).clamp(0.0, 1.0);
+      double calProgress = (totalCalories / _goalCalories).clamp(0.0, 1.0);
+      double sleepProgress = (sleepMinutes / _goalSleepMinutes).clamp(0.0, 1.0);
+      double heartProgress = 0.0;
+      if (lastHeartRate > 0) {
+        heartProgress = ((lastHeartRate - 40) / (120 - 40)).clamp(0.0, 1.0);
+      }
+
+      if (!mounted) return;
+
+      setState(() {
+        _currentDate = date;
+        _steps = stepsTotal.toString();
+        _calories = totalCalories.toString();
+        _heartRate = lastHeartRate > 0 ? lastHeartRate.toString() : "--";
+        _sleepDuration = sleepStr;
+        _progressValues = [stepProgress, calProgress, sleepProgress, heartProgress];
+      });
+
+      print("HomeContent -> Passos: $_steps, Cal: $_calories (Basal: ${basal.toInt()})");
+
+    } catch (e) {
+      print("Erro Health: $e");
+    }
   }
 
   void _goToPreviousDay() {
@@ -57,12 +166,12 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    final stepsValue = _dailyMetrics?.steps ?? 0;
-    final caloriesValue = _dailyMetrics?.calories ?? 0;
-    final sleepDuration = _dailyMetrics != null ? '6H' : '--';
-    final sleepQualityValue = _dailyMetrics?.sleepQuality ?? 0.0;
+    final User? user = FirebaseAuth.instance.currentUser;
+    String primeiroNome = "Visitante";
+    if (user != null && user.displayName != null) {
+      primeiroNome = user.displayName!.split(' ').first;
+    }
 
-    final List<double> progressValues = [0.8, 0.7, 0.5, 0.4];
     final List<Color> arcColors = [
       AppColors.blue800,
       AppColors.supportGreen2,
@@ -71,109 +180,107 @@ class _HomeContentState extends State<HomeContent> {
     ];
 
     return SafeArea(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Olá,',
-            style: TextStyle(fontSize: 22, color: Colors.grey),
-          ),
-          const Text(
-            'Willian',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Olá, $primeiroNome",
+              style: const TextStyle(fontSize: 24, color: Colors.grey),
             ),
-          ),
-          const SizedBox(height: 40),
+            const SizedBox(height: 40),
 
-          // Conteúdo da Home
-          Expanded(
-            child: ListView(
-              children: [
-                DateNavigator(
-                  currentDate: _currentDate,
-                  onPreviousDay: _goToPreviousDay,
-                  onNextDay: _goToNextDay,
-                ),
-                const SizedBox(height: 40),
-                Center(
-                  child: RainbowProgressIndicator(
-                    values: progressValues,
-                    colors: arcColors,
+            Expanded(
+              child: ListView(
+                children: [
+                  DateNavigator(
+                    currentDate: _currentDate,
+                    onPreviousDay: _goToPreviousDay,
+                    onNextDay: _goToNextDay,
                   ),
-                ),
-                const SizedBox(height: 40),
-                const Text(
-                  'Métricas de atividades',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 0.9,
-                  children: [
-                    MetricsCard(
-                      title: 'Calorias',
-                      value: caloriesValue.toString(),
-                      unit: 'kcal',
-                      iconWidget: SvgPicture.asset(
-                        'assets/images/fire.svg',
-                        height: 30,
-                      ),
+                  const SizedBox(height: 40),
+                  
+                  Center(
+                    child: RainbowProgressIndicator(
+                      values: _progressValues, 
+                      colors: arcColors,
                     ),
-                    MetricsCardHeart(
-                      title: 'Frequência Cardíaca',
-                      value: '96',
-                      unit: 'bpm',
-                      icon: SvgPicture.asset(
-                        'assets/images/heart-pulse.svg',
-                        height: 30,
-                      ),
-                      chartData: const [80, 75, 90, 85, 96, 92],
-                    ),
-                    MetricsCard(
-                      title: 'Passos',
-                      value: stepsValue.toString(),
-                      unit: 'passos',
-                      iconWidget: SvgPicture.asset(
-                        'assets/images/person-walking.svg',
-                        height: 30,
-                      ),
-                    ),
-                    const SizedBox.shrink(),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Dados do sono',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                SleepCard(
-                  title: 'Sono',
-                  duration: sleepDuration,
-                  iconWidget: SvgPicture.asset(
-                    'assets/images/moon.svg',
-                    height: 18,
                   ),
-                ),
-                const SizedBox(height: 10),
-                const SleepQualityCard(
-                    title: 'Qualidade do Sono',
-                    qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8])
-              ],
+                  
+                  const SizedBox(height: 40),
+                  const Text(
+                    'Métricas de atividades',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 0.9,
+                    children: [
+                      MetricsCard(
+                        title: 'Calorias',
+                        value: _calories, 
+                        unit: 'kcal',
+                        iconWidget: SvgPicture.asset(
+                          'assets/images/fire.svg',
+                          height: 30,
+                        ),
+                      ),
+                      MetricsCardHeart(
+                        title: 'Freq Cardíaca',
+                        value: _heartRate,
+                        unit: 'bpm',
+                        icon: SvgPicture.asset(
+                          'assets/images/heart-pulse.svg',
+                          height: 30,
+                        ),
+                        chartData: const [80, 75, 90, 85, 96, 92],
+                      ),
+                      MetricsCard(
+                        title: 'Passos',
+                        value: _steps,
+                        unit: 'passos',
+                        iconWidget: SvgPicture.asset(
+                          'assets/images/person-walking.svg',
+                          height: 30,
+                        ),
+                      ),
+                      const SizedBox.shrink(),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Dados do sono',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  SleepCard(
+                    title: 'Sono',
+                    duration: _sleepDuration,
+                    iconWidget: SvgPicture.asset(
+                      'assets/images/moon.svg',
+                      height: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const SleepQualityCard(
+                      title: 'Qualidade do Sono',
+                      qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8]
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    ));
+          ],
+        ),
+      )
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/user_profile/user_settings.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
@@ -7,6 +8,8 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final User? user = FirebaseAuth.instance.currentUser;
+
     final List<Map<String, dynamic>> menuItems = [
       {
         'title': 'Editar perfil',
@@ -33,25 +36,31 @@ class UserProfile extends StatelessWidget {
           child: Column(
             children: [
               //Seção do Avatar e nome do usuário
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 50,
-                backgroundColor: Color(0xFFE0E0E0),
+                backgroundColor: const Color(0xFFE0E0E0),
+                backgroundImage: user?.photoURL != null
+                    ? NetworkImage(user!.photoURL!)
+                    : null,
+                child: user?.photoURL == null
+                    ? const Icon(Icons.person, size: 50, color: Colors.grey)
+                    : null,
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Willian Jorge Sousa Furtado',
-                style: TextStyle(
+              Text(
+                user?.displayName ?? 'Usuário',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: AppColors.black400,
                 ),
               ),
-
               const SizedBox(height: 24),
 
               //Lista de cards clicáveis
-              for (var item in menuItems)
-                _buildMenuCard(context,
+              ...menuItems.map((item) {
+                return _buildMenuCard(context,
                     icon: item['icon'], title: item['title'], onTap: () {
                   if (item['route'] != null) {
                     Navigator.push(
@@ -61,7 +70,8 @@ class UserProfile extends StatelessWidget {
                   } else {
                     print("Rota ainda não disponível");
                   }
-                }),
+                });
+              }).toList(),
 
               const SizedBox(height: 40),
 
