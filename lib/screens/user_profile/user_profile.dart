@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/user_profile/user_settings.dart';
+import 'package:mentis_ai/screens/user_profile/about_app.dart';
+import 'package:mentis_ai/screens/login/login.dart'; 
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class UserProfile extends StatelessWidget {
@@ -10,25 +12,55 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
 
+    void handleLogout() async {
+      await FirebaseAuth.instance.signOut();
+      
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Login()), 
+          (route) => false
+        );
+      }
+    }
+
     final List<Map<String, dynamic>> menuItems = [
       {
         'title': 'Editar perfil',
         'icon': Icons.person_outline,
-        'route': const UserSettings()
+        'onTap': () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const UserSettings()));
+        }
       },
-      {'title': 'Permissões', 'icon': Icons.verified_user_outlined},
-      {'title': 'Sobre', 'icon': Icons.help_outline},
-      {'title': 'Log out', 'icon': Icons.logout},
+      {
+        'title': 'Permissões', 
+        'icon': Icons.verified_user_outlined,
+        'onTap': () {
+           print("Permissões clicado");
+        }
+      },
+      {
+        'title': 'Sobre', 
+        'icon': Icons.help_outline,
+        'onTap': () {
+           Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutApp()));
+        }
+      },
+      {
+        'title': 'Log out', 
+        'icon': Icons.logout,
+        'onTap': () => handleLogout() 
+      },
     ];
 
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: AppColors.white,
+        backgroundColor: Colors.white,
         elevation: 0,
         title: const Text('Configurações',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
         child: Padding(
@@ -52,31 +84,21 @@ class UserProfile extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.black400,
+                  color: Colors.black87, // Cor ajustada
                 ),
               ),
               const SizedBox(height: 24),
 
               ...menuItems.map((item) {
-                return _buildMenuCard(context,
-                    icon: item['icon'], title: item['title'], onTap: () {
-                  if (item['route'] != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => item['route']),
-                    );
-                  } else {
-                    print("Rota ainda não disponível");
-                  }
-                });
-              }).toList(),
+                return _buildMenuCard(
+                  context,
+                  icon: item['icon'], 
+                  title: item['title'], 
+                  onTap: item['onTap'] 
+                );
+              }),
 
               const SizedBox(height: 40),
-
-              const SizedBox(
-                width: double.infinity,
-                height: 50,
-              ),
             ],
           ),
         ),
