@@ -38,6 +38,10 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    aaptOptions {
+        noCompress("tflite", "lite")
+    }
 }
 
 apply(plugin = "com.google.gms.google-services")

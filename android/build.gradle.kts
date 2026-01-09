@@ -33,3 +33,15 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+
+// subprojects {
+//     // Usamos 'beforeEvaluate' ou apenas configuramos diretamente 
+//     // se o plugin do Android for detectado
+//     plugins.withType<com.android.build.gradle.api.AndroidBasePlugin> {
+//         val android = extensions.getByType<com.android.build.gradle.BaseExtension>()
+//         if (android.namespace == null) {
+//             android.namespace = "com.fix.namespace.$name"
+//         }
+//     }
+// }

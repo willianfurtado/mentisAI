@@ -46,6 +46,11 @@ dependencies:
   intl: ^0.18.1
   health: ^13.2.1
   permission_handler: ^11.3.0
+  # tflite_flutter: 
+  #   git: 
+  #     url: https://github.com/am15h/tflite_flutter_plugin.git
+  ml_algo: ^16.18.0
+  ml_dataframe: ^1.5.0
     
 
 dev_dependencies:
@@ -77,6 +82,8 @@ flutter:
     - assets/images/
     - .env
   #   - images/a_dot_ham.jpeg
+    - assets/models/kmeans_model.tflite
+    - assets/models/kmeans_model.json
 
   fonts:
     - family: HostGrotesk # Nome que será usado no código
