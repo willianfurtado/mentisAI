@@ -50,7 +50,7 @@ class MentisApp extends StatelessWidget {
       ),
       routes: {
         '/home': (context) => const Home(),
-        '/screening-system': (context) => const ScreeeningSystem(),
+        // '/screening-system': (context) => const ScreeeningSystem(),
         '/evolution-system': (context) => const EvolutionSystem(),
         '/evolution-system-steps': (context) => const EvolutionSystemSteps(),
         '/user-profile': (context) => const UserProfile(),

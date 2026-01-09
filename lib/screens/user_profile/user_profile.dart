@@ -31,13 +31,13 @@ class UserProfile extends StatelessWidget {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const UserSettings()));
         }
       },
-      {
-        'title': 'Permissões', 
-        'icon': Icons.verified_user_outlined,
-        'onTap': () {
-           print("Permissões clicado");
-        }
-      },
+      // {
+      //   'title': 'Permissões', 
+      //   'icon': Icons.verified_user_outlined,
+      //   'onTap': () {
+      //      print("Permissões clicado");
+      //   }
+      // },
       {
         'title': 'Sobre', 
         'icon': Icons.help_outline,

@@ -15,12 +15,40 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _screenOptions = <Widget>[
-    const HomeContent(), 
-    const EvolutionSystem(),
-    const ScreeeningSystem(),
-    const UserProfile(),
-  ];
+  // 1. Crie as variáveis para armazenar os dados que virão da HomeContent
+  int _steps = 0;
+  double _calories = 0.0;
+  int _heartRate = 0;
+  int _sleepMinutes = 0;
+
+  // 2. Função para atualizar os dados (será chamada pela HomeContent)
+  // void _updateHealthData(int steps, double calories) {
+  //   setState(() {
+  //     _steps = steps;
+  //     _calories = calories;
+  //   });
+  // }
+
+  void _updateHealthData(
+      {required int steps,
+      required double calories,
+      required int heartRate,
+      required int sleepMinutes}) {
+    if (!mounted) return;
+    setState(() {
+      _steps = steps;
+      _calories = calories;
+      _heartRate = heartRate;
+      _sleepMinutes = sleepMinutes;
+    });
+  }
+
+  // static final List<Widget> _screenOptions = <Widget>[
+  //   const HomeContent(),
+  //   const EvolutionSystem(),
+  //   const ScreeeningSystem(),
+  //   const UserProfile(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -30,8 +58,22 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screenOptions = <Widget>[
+      // Passamos a função de atualização para a HomeContent
+      HomeContent(onDataLoaded: _updateHealthData),
+      const EvolutionSystem(),
+      // Passamos os dados reais para a ScreeeningSystem
+      ScreeeningSystem(
+        steps: _steps,
+        calories: _calories,
+        heartRate: _heartRate, // Passando o dado real
+        sleepMinutes: _sleepMinutes, // Passando o dado real
+      ),
+      const UserProfile(),
+    ];
+
     return Scaffold(
-      body: _screenOptions.elementAt(_selectedIndex),
+      body: screenOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

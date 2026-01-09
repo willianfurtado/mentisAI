@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/services/prediction_service.dart'; // Importe seu serviço
+import 'package:mentis_ai/services/prediction_service.dart';
 import 'package:mentis_ai/screens/widgets/screening_system/analysis_card.dart';
 import 'package:mentis_ai/screens/widgets/screening_system/cluster_gauge.dart';
 import 'package:mentis_ai/screens/widgets/screening_system/screenning_recommendation_card.dart';
 
 class ScreeeningSystem extends StatefulWidget {
-  const ScreeeningSystem({super.key});
+  // 1. Campos adicionados para receber os dados da Home
+  final int steps;
+  final double calories;
+  final int heartRate; // Adicionado
+  final int sleepMinutes;
+
+  const ScreeeningSystem({
+    super.key,
+    required this.steps,
+    required this.calories,
+    required this.heartRate,
+    required this.sleepMinutes,
+  });
 
   @override
   State<ScreeeningSystem> createState() => _ScreeeningSystemState();
@@ -14,15 +26,10 @@ class ScreeeningSystem extends StatefulWidget {
 class _ScreeeningSystemState extends State<ScreeeningSystem> {
   final PredictionService _aiService = PredictionService();
 
-  // Variáveis para controlar o estado da UI
-  int _clusterResult = -1; // -1 significa "carregando"
+  int _clusterResult = -1;
   String _label = "Analisando dados...";
   double _score = 0.0;
   bool _isLoading = true;
-
-  // Dados de exemplo (que virão do Health Connect)
-  int passosHj = 3500;
-  double calHj = 1500.0;
 
   @override
   void initState() {
@@ -31,28 +38,30 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
   }
 
   Future<void> _loadAndPredict() async {
-    // 1. Carrega o modelo JSON 
+    // Carrega o modelo JSON
     await _aiService.loadModel();
 
-    int cluster = _aiService.predict([passosHj.toDouble(), calHj]);
+    // 2. Uso dos dados reais passados pelo widget (vindo da Home)
+    int cluster =
+        _aiService.predict([widget.steps.toDouble(), widget.calories]);
 
     if (mounted) {
       setState(() {
         _clusterResult = cluster;
         _isLoading = false;
 
-        // Importante: Verifique no seu Colab qual ID (0, 1 ou 2) corresponde a cada grupo
+        // Mapeamento baseado na análise do seu Colab
         switch (cluster) {
-          case 0:
+          case 0: // Geralmente o grupo Ativo (confira no seu Python)
             _label = "Nível Ativo / Saudável";
             _score = 30.0;
             break;
-          case 1:
+          case 1: // Moderado
             _label = "Nível Moderado";
             _score = 65.0;
             break;
-          case 2:
-            _label =  "Grupo de Risco (Sedentarismo)";
+          case 2: // Risco
+            _label = "Grupo de Risco (Sedentarismo)";
             _score = 90.0;
             break;
           default:
@@ -63,12 +72,24 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
     }
   }
 
+  String _formatSleep(int minutes) {
+    if (minutes == 0) return "--";
+    final hours = minutes ~/ 60;
+    final mins = minutes % 60;
+    return "${hours}h ${mins}m";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Adicionado um AppBar simples para facilitar a navegação de volta
+      // appBar: AppBar(
+      //     backgroundColor: Colors.transparent,
+      //     elevation: 0,
+      //     iconTheme: const IconThemeData(color: Colors.black)),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -93,8 +114,6 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 20),
-
-                              // 🎯 AQUI O FEEDBACK DA IA É RENDERIZADO
                               ClusterGauge(
                                 clusterScore: _score,
                                 clusterClassification: _label,
@@ -102,8 +121,6 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
                             ],
                           ),
                           const SizedBox(height: 30),
-
-                          // Seção Análise detalhada
                           const Text(
                             'Análise detalhada',
                             style: TextStyle(
@@ -118,27 +135,27 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
                             mainAxisSpacing: 10,
                             childAspectRatio: 2.0,
                             children: [
+                              // 3. Exibição dinâmica dos passos reais
+                              AnalysisCard(text: 'Passos: ${widget.steps}'),
                               AnalysisCard(
                                   text:
-                                      'Passos hoje: 3500'), // Exemplo dinâmico
-                              const AnalysisCard(
-                                  text: 'Sua VFC está 25% abaixo'),
-                              const AnalysisCard(
-                                  text: 'Aumento em chamadas rejeitadas'),
-                              const AnalysisCard(
-                                  text: 'Sono: 6h média semanal'),
+                                      'Calorias: ${widget.calories.toInt()} kcal'),
+                              AnalysisCard(
+                                  text:
+                                      'FC Atual: ${widget.heartRate > 0 ? widget.heartRate : "--"} bpm'),
+                              AnalysisCard(
+                                  text:
+                                      'Sono: ${_formatSleep(widget.sleepMinutes)}'),
                             ],
                           ),
                           const SizedBox(height: 25),
-
                           const Text(
                             'Recomendações',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 15),
-                          // Opcional: Passar o cluster para personalizar a recomendação
-                          const RecomendationCard(),
+                          RecomendationCard(clusterIndex: _clusterResult),
                         ],
                       ),
               ),

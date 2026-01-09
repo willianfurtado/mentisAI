@@ -12,7 +12,14 @@ import 'package:mentis_ai/screens/widgets/Home/sleep_quality_card.dart';
 import 'package:mentis_ai/utils/app-colors.dart';
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
+  final Function({
+    required int steps, 
+    required double calories, 
+    required int heartRate, 
+    required int sleepMinutes
+  }) onDataLoaded;
+
+  const HomeContent({super.key, required this.onDataLoaded});
 
   @override
   State<HomeContent> createState() => _HomeContentState();
@@ -137,6 +144,13 @@ class _HomeContentState extends State<HomeContent> {
         _progressValues = [stepProgress, calProgress, sleepProgress, heartProgress];
       });
 
+      //mod
+      widget.onDataLoaded(
+        steps: stepsTotal,
+        calories: totalCalories.toDouble(),
+        heartRate: lastHeartRate,
+        sleepMinutes: sleepMinutes,
+      );
       print("HomeContent -> Passos: $_steps, Cal: $_calories (Basal: ${basal.toInt()})");
 
     } catch (e) {
