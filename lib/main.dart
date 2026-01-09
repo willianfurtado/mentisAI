@@ -19,18 +19,18 @@ void main() async {
 
   try {
     await dotenv.load(fileName: '.env');
-    debugPrint('✅ .env carregado');
+    debugPrint('.env carregado');
   } catch (e) {
-    debugPrint('⚠️ Não foi possível carregar o arquivo .env: $e');
+    debugPrint('Não foi possível carregar o arquivo .env: $e');
   }
 
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    debugPrint('✅ Firebase initialized successfully');
+    debugPrint('Firebase initialized successfully');
   } catch (e) {
-    debugPrint('❌ Firebase initialization failed: $e');
+    debugPrint('Firebase initialization failed: $e');
   }
 
   runApp(const MentisApp());

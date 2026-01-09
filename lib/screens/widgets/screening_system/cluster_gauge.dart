@@ -29,7 +29,6 @@ class ClusterGauge extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Título superior
           const Text(
             'Sua avaliação de bem-estar',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -42,15 +41,14 @@ class ClusterGauge extends StatelessWidget {
               axes: <RadialAxis>[
                 RadialAxis(
                   minimum: 0,
-                  maximum: 100, // Escala de 0 a 100
-                  startAngle: 180, // Início (esquerda)
-                  endAngle: 0, // Fim (direita)
+                  maximum: 100, 
+                  startAngle: 180,
+                  endAngle: 0,
 
                   showLabels: false,
                   showTicks: false,
 
                   ranges: <GaugeRange>[
-                    // Faixa Laranja (Progresso)
                     GaugeRange(
                       startValue: 0,
                       endValue: clusterScore,
@@ -58,17 +56,15 @@ class ClusterGauge extends StatelessWidget {
                       startWidth: 25,
                       endWidth: 25,
                     ),
-                    // Faixa Cinza (Restante)
                     GaugeRange(
                       startValue: clusterScore,
                       endValue: 100,
-                      color: Colors.grey.shade300, // Cor Cinza do design
+                      color: Colors.grey.shade300,
                       startWidth: 25,
                       endWidth: 25,
                     ),
                   ],
 
-                  // Marcador de Limite (O pequeno traço preto)
                   // pointers: <GaugePointer>[
                   //   MarkerPointer(
                   //     value: clusterScore, // Posição do traço
@@ -80,11 +76,10 @@ class ClusterGauge extends StatelessWidget {
                   //   ),
                   // ],
 
-                  // Texto Central (Classificação do Cluster)
                   annotations: <GaugeAnnotation>[
                     GaugeAnnotation(
                       widget: Text(
-                        clusterClassification, // Ex: 'Grupo de alto risco'
+                        clusterClassification,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,

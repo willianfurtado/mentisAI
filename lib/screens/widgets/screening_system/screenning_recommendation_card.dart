@@ -9,7 +9,6 @@ class RecomendationCard extends StatelessWidget {
     required this.clusterIndex,
   });
 
-  // 1. Função da Mensagem (que já tínhamos)
   String _getRecommendationMessage() {
     switch (clusterIndex) {
       case 0:
@@ -23,7 +22,6 @@ class RecomendationCard extends StatelessWidget {
     }
   }
 
-  // 2. A SUA FUNÇÃO DE COR (Inserida aqui)
   Color _getRecommendationColor() {
     if (clusterIndex == 2) return Colors.redAccent; // Risco
     if (clusterIndex == 1) return Colors.orange;    // Moderado
@@ -60,7 +58,6 @@ class RecomendationCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                // 3. AQUI VOCÊ CHAMA A FUNÇÃO
                 color: _getRecommendationColor(), 
               ),
             ),

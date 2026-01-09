@@ -14,7 +14,6 @@ class Authentication {
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     User? user;
 
-    // Firebase não está disponível em Desktop (Windows, Linux, macOS)
     if (!kIsWeb &&
         (defaultTargetPlatform == TargetPlatform.windows ||
             defaultTargetPlatform == TargetPlatform.linux ||
@@ -28,43 +27,41 @@ class Authentication {
     }
 
     try {
-      debugPrint('🔵 Iniciando login com Google...');
+      debugPrint('Iniciando login com Google...');
 
-      // Fazer login com Google
       final googleSignInAccount = await GoogleSignIn().signIn();
       if (googleSignInAccount == null) {
-        debugPrint('🔴 Usuário cancelou o login');
-        return null; // usuário cancelou
+        debugPrint('Usuário cancelou o login');
+        return null; 
       }
 
-      debugPrint('✅ Google SignIn bem-sucedido: ${googleSignInAccount.email}');
+      debugPrint('Google SignIn bem-sucedido: ${googleSignInAccount.email}');
 
       final googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
-      debugPrint('✅ Google Authentication obtida');
+      debugPrint('Google Authentication obtida');
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
 
-      // Tentar fazer login no Firebase
-      debugPrint('🔵 Fazendo login no Firebase...');
+      debugPrint('Fazendo login no Firebase...');
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       user = userCredential.user;
 
-      debugPrint('✅ Login Firebase bem-sucedido: ${user?.email}');
+      debugPrint('Login Firebase bem-sucedido: ${user?.email}');
     } on FirebaseAuthException catch (e) {
-      debugPrint('🔴 Firebase Auth Exception: ${e.code} - ${e.message}');
+      debugPrint('Firebase Auth Exception: ${e.code} - ${e.message}');
       final message = e.message ?? 'Falha na autenticação';
       if (context.mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(message)));
       }
     } catch (e) {
-      debugPrint('🔴 Erro geral no login: $e');
+      debugPrint('Erro geral no login: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Erro no login: ${e.toString()}')));
@@ -72,9 +69,9 @@ class Authentication {
     }
 
     if ((user != null)) {
-      debugPrint('🟢 Login finalizado, usuário: ${user.email}');
+      debugPrint('Login finalizado, usuário: ${user.email}');
     } else {
-      debugPrint('🔴 user é null após tentativa de login');
+      debugPrint('user é null após tentativa de login');
     }
     return user;
   }

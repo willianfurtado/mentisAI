@@ -13,7 +13,6 @@ class MetricData {
     required this.sleepQuality,
   });
 
-  // Método de conversão de Map (do DB) para Objeto Dart
   factory MetricData.fromMap(Map<String, dynamic> map) {
     return MetricData(
       id: map['id'],
@@ -24,7 +23,6 @@ class MetricData {
     );
   }
 
-  // Método de conversão de Objeto Dart para Map (para o DB)
   Map<String, dynamic> toMap() {
     return {
       'id': id,

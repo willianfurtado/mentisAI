@@ -46,7 +46,6 @@ android {
 
 apply(plugin = "com.google.gms.google-services")
 
-//Dependencias usadas no firebase para configuração do login com o google
 dependencies{ 
     implementation("androidx.health.connect:connect-client:1.2.0-alpha02")
     implementation(platform("com.google.firebase:firebase-bom:34.5.0"))

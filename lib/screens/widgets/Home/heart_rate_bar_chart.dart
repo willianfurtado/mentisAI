@@ -31,8 +31,8 @@ class HeartRateBarChart extends StatelessWidget {
       borderData: FlBorderData(show: false),      
       gridData: const FlGridData(show: false),      
       
-      minY: 0, //base do gráfico iniciando no ponto zero 
-      maxY: maxYValue, //limite que o eixo vertical irá alcançar (120 unidades -> 120bpm)
+      minY: 0, 
+      maxY: maxYValue,
 
       barGroups: heartRateData.asMap().entries.map((entry) {
         final index = entry.key;

@@ -5,7 +5,6 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin") apply false
 }
 
-// 🔹 Repositórios globais (necessário para o Firebase e o Google)
 allprojects {
     repositories {
         google()
@@ -13,7 +12,6 @@ allprojects {
     }
 }
 
-// 🔹 Ajuste de build directory (mantém igual ao seu original)
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
@@ -29,15 +27,12 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-// 🔹 Tarefa padrão de limpeza
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
 
 
 // subprojects {
-//     // Usamos 'beforeEvaluate' ou apenas configuramos diretamente 
-//     // se o plugin do Android for detectado
 //     plugins.withType<com.android.build.gradle.api.AndroidBasePlugin> {
 //         val android = extensions.getByType<com.android.build.gradle.BaseExtension>()
 //         if (android.namespace == null) {

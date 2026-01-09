@@ -35,10 +35,9 @@ class ArcProgressPainter extends CustomPainter {
 
     double radius = size.width / 2;
 
-    const double startAngle = pi; //ângulo inicial (180 graus)
-    const double sweepAngle = pi; //ângulo de progresso (180 -> 360 graus)
+    const double startAngle = pi;
+    const double sweepAngle = pi;
     for (int i = 0; i < values.length; i++) {
-      //estilização do arco de plano de fundo
       final backgroundPaint = Paint()
         ..color = Colors.grey.withOpacity(0.2)
         ..style = PaintingStyle.stroke

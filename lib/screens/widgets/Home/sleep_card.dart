@@ -29,11 +29,9 @@ class SleepCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //Linha do título
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //Lado esquerdo
               Row(
                 children: [
                   const Text(
@@ -59,7 +57,6 @@ class SleepCard extends StatelessWidget {
             ],
           ),
 
-          //Barra de progresso
           const SleepBarChart(progressRatio: 0.6),
         ],
       ),

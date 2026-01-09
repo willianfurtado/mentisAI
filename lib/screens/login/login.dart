@@ -20,7 +20,6 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                //Logo MentisAI
                 Image.asset(
                   'assets/images/mentis.png',
                   height: 400.0,
@@ -38,7 +37,6 @@ class Login extends StatelessWidget {
 
                 const SizedBox(height: 40),
 
-                // 7. Botão Entrar com o Google
                 SizedBox(
                   height: 50,
                   child: OutlinedButton.icon(

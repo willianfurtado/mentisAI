@@ -37,7 +37,6 @@ class _MetricDetailScreenState extends State<MetricDetailScreen> {
   Future<void> _loadDailyHistory() async {
     final Health health = Health();
     final now = DateTime.now();
-    // Pega os últimos 7 dias incluindo o hoje
     final startDate = now.subtract(const Duration(days: 6));
     final startOfPeriod = DateTime(startDate.year, startDate.month, startDate.day);
 
@@ -54,7 +53,6 @@ class _MetricDetailScreenState extends State<MetricDetailScreen> {
       List<String> dayLabels = [];
 
       for (int i = 0; i < 7; i++) {
-        // 0 = 6 dias atrás ... 6 = Hoje
         DateTime targetDay = startDate.add(Duration(days: i));
         dayLabels.add(DateFormat('E', 'pt_BR').format(targetDay));
 
@@ -71,7 +69,6 @@ class _MetricDetailScreenState extends State<MetricDetailScreen> {
           }
         }
         
-        // Média para batimentos, Soma para o resto
         if (widget.healthType == HealthDataType.HEART_RATE && pointsOfDay.isNotEmpty) {
            daySum = daySum / pointsOfDay.length;
         }
@@ -79,7 +76,6 @@ class _MetricDetailScreenState extends State<MetricDetailScreen> {
         dailyTotals[i] = daySum;
       }
 
-      // Lógica de fallback simples para BMR se vier zerado
       if (widget.healthType == HealthDataType.BASAL_ENERGY_BURNED || 
          (widget.healthType == HealthDataType.ACTIVE_ENERGY_BURNED && dailyTotals.last == 0)) {
       }
@@ -105,19 +101,17 @@ class _MetricDetailScreenState extends State<MetricDetailScreen> {
 
     double todayValue = data.last;
     
-    // Média dos 6 dias anteriores (histórico)
     double pastSum = 0;
     for(int i=0; i<6; i++) {
       pastSum += data[i];
     }
     double pastAverage = pastSum / 6;
-    if (pastAverage == 0) pastAverage = 1; // Evita divisão por zero
+    if (pastAverage == 0) pastAverage = 1;
 
     final now = DateTime.now();
-    bool isEndOfDay = now.hour >= 23; // Definição de "Fim do dia"
+    bool isEndOfDay = now.hour >= 23;
 
     String metric = widget.title;
-    //fim do dia 
     if (isEndOfDay) {
       if (todayValue >= pastAverage * 1.05) {
         return "Parabéns! Você fechou o dia acima da sua média semanal em $metric. Esse esforço extra faz diferença na sua evolução a longo prazo.";
@@ -127,7 +121,6 @@ class _MetricDetailScreenState extends State<MetricDetailScreen> {
         return "Dia finalizado! Você manteve sua constância em $metric hoje. A regularidade é a chave para resultados sustentáveis.";
       }
     } 
-    // durante o dia
     else {
        if (todayValue > pastAverage) {
          return "Incrível! Mesmo antes do dia acabar, você já superou sua média diária de $metric. Continue assim!";
