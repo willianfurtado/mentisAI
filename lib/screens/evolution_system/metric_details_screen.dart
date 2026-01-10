@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:mentis_ai/utils/app-colors.dart'; 
 
 class MetricDetailScreen extends StatefulWidget {
   final String title;

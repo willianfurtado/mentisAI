@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mentis_ai/utils/app-colors.dart';
 
 class AboutApp extends StatelessWidget {
   const AboutApp({super.key});
@@ -56,8 +55,8 @@ class AboutApp extends StatelessWidget {
                   color: const Color(0xFFF5F7F9),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Column(
-                  children: const [
+                child: const Column(
+                  children: [
                     Text(
                       "Desenvolvido por",
                       style: TextStyle(

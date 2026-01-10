@@ -7,7 +7,6 @@ import 'package:mentis_ai/screens/user_profile/user_profile.dart';
 import 'package:mentis_ai/screens/user_profile/user_settings.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system_steps.dart';
 import 'package:mentis_ai/screens/home/home.dart';
-import 'package:mentis_ai/screens/screening_system/screening_system.dart';
 import 'utils/firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -80,7 +79,7 @@ class AuthGate extends StatelessWidget {
           return const Home();
         }
 
-        return const Home();
+        return const Login();
       },
     );
   }
