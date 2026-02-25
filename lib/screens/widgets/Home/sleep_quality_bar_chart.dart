@@ -8,7 +8,7 @@ class SleepQualityBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 2.5, // Ajuste a proporção para o tamanho desejado
+      aspectRatio: 2.5,
       child: BarChart(
         mainBarData(),
       ),
@@ -16,7 +16,6 @@ class SleepQualityBarChart extends StatelessWidget {
   }
 
   BarChartData mainBarData() {
-    //O valor máximo é 1.0 (100% de qualidade)
     const double maxYValue = 1.0;
 
     return BarChartData(
@@ -40,7 +39,7 @@ class SleepQualityBarChart extends StatelessWidget {
               borderRadius: BorderRadius.circular(7),
               backDrawRodData: BackgroundBarChartRodData(
                 show: true,
-                toY: maxYValue, // Ocupa 100% da altura total
+                toY: maxYValue,
                 color: Colors.grey.withOpacity(0.3),
               ),
             ),

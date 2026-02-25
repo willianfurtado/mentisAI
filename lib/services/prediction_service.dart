@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 class PredictionService {
   List<List<double>>? _centroids;
 
-  // --- VALORES DO ROBUST SCALER (COPIADOS DO SEU COLAB) ---
-  // Ordem: [0] = passos, [1] = calorias
   final List<double> _medianas = [5217.0, 1761.64];
   final List<double> _escalas = [4852.0, 311.89];
 
@@ -19,24 +17,21 @@ class PredictionService {
           .map((cluster) => List<double>.from(cluster.map((v) => v.toDouble())))
           .toList();
           
-      print("✅ Modelo e Scaler configurados com sucesso!");
+      print("Modelo e Scaler configurados com sucesso!");
     } catch (e) {
-      print("❌ Erro ao carregar o modelo: $e");
+      print("Erro ao carregar o modelo: $e");
     }
   }
 
   int predict(List<double> input) {
     if (_centroids == null) return -1;
 
-    // 1. NORMALIZAÇÃO ROBUSTA (Igual ao Python)
     List<double> inputScaled = [];
     for (int i = 0; i < input.length; i++) {
-      // Fórmula: (Valor - Mediana) / IQR
       double scaledValue = (input[i] - _medianas[i]) / _escalas[i];
       inputScaled.add(scaledValue);
     }
 
-    // 2. CÁLCULO DE DISTÂNCIA (K-Means)
     int clusterVencedor = 0;
     double menorDistancia = double.infinity;
 

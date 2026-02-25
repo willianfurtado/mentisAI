@@ -38,7 +38,6 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
   }
 
   Future<void> _loadAndPredict() async {
-    // Carrega o modelo JSON
     await _aiService.loadModel();
 
     // 2. Uso dos dados reais passados pelo widget (vindo da Home)
@@ -50,9 +49,9 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
         _clusterResult = cluster;
         _isLoading = false;
 
-        // Mapeamento baseado na análise do seu Colab
+        
         switch (cluster) {
-          case 0: // Geralmente o grupo Ativo (confira no seu Python)
+          case 0: 
             _label = "Nível Ativo / Saudável";
             _score = 30.0;
             break;
@@ -82,11 +81,6 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Adicionado um AppBar simples para facilitar a navegação de volta
-      // appBar: AppBar(
-      //     backgroundColor: Colors.transparent,
-      //     elevation: 0,
-      //     iconTheme: const IconThemeData(color: Colors.black)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
@@ -135,7 +129,6 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
                             mainAxisSpacing: 10,
                             childAspectRatio: 2.0,
                             children: [
-                              // 3. Exibição dinâmica dos passos reais
                               AnalysisCard(text: 'Passos: ${widget.steps}'),
                               AnalysisCard(
                                   text:

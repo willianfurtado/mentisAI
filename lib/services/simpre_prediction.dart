@@ -21,7 +21,6 @@ class SimplePredictionService {
 
     for (int i = 0; i < _centroids!.length; i++) {
       double distance = 0;
-      // Cálculo da Distância Euclidiana
       for (int j = 0; j < input.length; j++) {
         distance += pow(input[j] - _centroids![i][j], 2);
       }

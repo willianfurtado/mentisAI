@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/user_profile/user_settings.dart';
 import 'package:mentis_ai/screens/user_profile/about_app.dart';
 import 'package:mentis_ai/screens/login/login.dart'; 
-import 'package:mentis_ai/utils/app-colors.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({super.key});

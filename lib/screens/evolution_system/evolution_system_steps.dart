@@ -47,13 +47,11 @@ class EvolutionSystemSteps extends StatelessWidget {
                   FlSpot(1, 17.5),
                   FlSpot(2, 25.0),
                 ],
-                // Rótulos correspondentes ao eixo X
                 bottomLabels: [
                   '8 de jul.',
                   '9 de jul.',
                   '10 de jul.',
                 ],
-                // O valor mais alto na escala Y (25 mil)
                 maxYValue: 25.0,
               ),
 
@@ -61,7 +59,6 @@ class EvolutionSystemSteps extends StatelessWidget {
                 height: 20,
               ),
 
-              //container do insight
               const EvolutionInsight(),
             ],
           ),

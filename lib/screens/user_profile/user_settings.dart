@@ -83,7 +83,6 @@ class _UserSettingsState extends State<UserSettings> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              //Seção de Dados Gerais
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(

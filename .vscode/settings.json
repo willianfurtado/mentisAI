@@ -54,5 +54,5 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "cmake.sourceDirectory": "C:/Users/Alexandre/OneDrive/Área de Trabalho/mentisAI/linux",
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

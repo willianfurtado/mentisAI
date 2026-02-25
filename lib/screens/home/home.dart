@@ -15,13 +15,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  // 1. Crie as variáveis para armazenar os dados que virão da HomeContent
   int _steps = 0;
   double _calories = 0.0;
   int _heartRate = 0;
   int _sleepMinutes = 0;
 
-  // 2. Função para atualizar os dados (será chamada pela HomeContent)
   // void _updateHealthData(int steps, double calories) {
   //   setState(() {
   //     _steps = steps;
@@ -59,15 +57,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screenOptions = <Widget>[
-      // Passamos a função de atualização para a HomeContent
       HomeContent(onDataLoaded: _updateHealthData),
       const EvolutionSystem(),
-      // Passamos os dados reais para a ScreeeningSystem
       ScreeeningSystem(
         steps: _steps,
         calories: _calories,
-        heartRate: _heartRate, // Passando o dado real
-        sleepMinutes: _sleepMinutes, // Passando o dado real
+        heartRate: _heartRate, 
+        sleepMinutes: _sleepMinutes, 
       ),
       const UserProfile(),
     ];
