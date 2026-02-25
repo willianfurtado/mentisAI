@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/login/login.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system.dart';
+import 'package:mentis_ai/screens/onboarding/onboarding_screen.dart';
 import 'package:mentis_ai/screens/user_profile/user_profile.dart';
 import 'package:mentis_ai/screens/user_profile/user_settings.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system_steps.dart';
@@ -61,6 +62,7 @@ class MentisApp extends StatelessWidget {
     );
   }
 }
+
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -69,7 +71,6 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -80,7 +81,7 @@ class AuthGate extends StatelessWidget {
           return const Home();
         }
 
-        return const Home();
+        return const OnboardingScreen();
       },
     );
   }
