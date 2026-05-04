@@ -68,6 +68,11 @@ class _HomeContentState extends State<HomeContent> {
       HealthDataType.BASAL_ENERGY_BURNED, 
       HealthDataType.HEART_RATE,
       HealthDataType.SLEEP_SESSION,
+      // Separar estágios do sono
+      HealthDataType.SLEEP_AWAKE,
+      HealthDataType.SLEEP_REM,
+      HealthDataType.SLEEP_LIGHT,
+      HealthDataType.SLEEP_DEEP,
     ];
 
     try {

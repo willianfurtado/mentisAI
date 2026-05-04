@@ -1,57 +1,27 @@
 import 'dart:convert';
-import 'dart:math';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class PredictionService {
-  List<List<double>>? _centroids;
+  final Uri url = Uri.parse('');
 
-  final List<double> _medianas = [5217.0, 1761.64];
-  final List<double> _escalas = [4852.0, 311.89];
-
-  Future<void> loadModel() async {
+  Future<Map<String, dynamic>?> getPredictionCluster(Map<String, dynamic> healthData) async {
     try {
-      final String response = await rootBundle.loadString('assets/models/kmeans_model.json');
-      final data = json.decode(response);
-      
-      _centroids = (data['centroids'] as List)
-          .map((cluster) => List<double>.from(cluster.map((v) => v.toDouble())))
-          .toList();
-          
-      print("Modelo e Scaler configurados com sucesso!");
-    } catch (e) {
-      print("Erro ao carregar o modelo: $e");
-    }
-  }
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(healthData),
+      );
 
-  int predict(List<double> input) {
-    if (_centroids == null) return -1;
-
-    List<double> inputScaled = [];
-    for (int i = 0; i < input.length; i++) {
-      double scaledValue = (input[i] - _medianas[i]) / _escalas[i];
-      inputScaled.add(scaledValue);
-    }
-
-    int clusterVencedor = 0;
-    double menorDistancia = double.infinity;
-
-    for (int i = 0; i < _centroids!.length; i++) {
-      double distancia = _calcularDistanciaEuclidiana(inputScaled, _centroids![i]);
-
-      if (distancia < menorDistancia) {
-        menorDistancia = distancia;
-        clusterVencedor = i;
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print("Erro no Servidor: ${response.statusCode} - ${response.body}");
+        return null;
       }
-    }
 
-    return clusterVencedor;
-  }
-
-  double _calcularDistanciaEuclidiana(List<double> p1, List<double> p2) {
-    double soma = 0;
-    for (int i = 0; i < p1.length; i++) {
-      soma += pow(p1[i] - p2[i], 2);
+    } catch(e) {
+      print("Erro: $e");
+      return null;
     }
-    return sqrt(soma);
   }
 }

@@ -24,40 +24,62 @@ class _UserSettingsState extends State<UserSettings> {
   String? _selectedResidence;
 
   Future<void> _saveProfile() async {
-    if (_selectedGender == null || _selectedEducationLevel == null) {
+    if (_selectedGender == null ||
+        _selectedEducationLevel == null ||
+        _selectedIncome == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text("Por favor, preencha os campos obrigatórios")),
       );
+
+      try {
+        final user = UserData(
+          id: 1,
+          gender: _selectedGender!,
+          dateOfBirth: _dateController.text,
+          maritalStatus: _selectedMaritalStatus ?? 'Não informado',
+          educationLevel: _selectedEducationLevel!,
+          profession: _selectedProfession ?? 'Não informado',
+          income: _selectedIncome ?? 'Não informado',
+          familyArrangement: _selectedFamilyArrangement ?? 'Não informado',
+          children: _selectedChildren ?? '0',
+          residence: _selectedResidence ?? 'Não informado',
+          smartwatch: _watchController.text,
+        );
+
+        final result = await DataBaseService().saveUser(user);
+
+        if (mounted) {
+          if (result > 0) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Dados salvos com sucesso!"),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.pop(context);
+          }
+        } else {
+          throw Exception("Falha ao inserir dados.");
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Erro ao salvar: $e"),
+              backgroundColor: Colors.red, 
+            ),
+          );
+        }
+      }
+
       return;
-    }
-
-    final user = UserData(
-      id: 1,
-      gender: _selectedGender!,
-      dateOfBirth: _dateController.text,
-      maritalStatus: _selectedMaritalStatus ?? 'Não informado',
-      educationLevel: _selectedEducationLevel!,
-      profession: _selectedProfession ?? 'Não informado',
-      income: _selectedIncome ?? 'Não informado',
-      familyArrangement: _selectedFamilyArrangement ?? 'Não informado',
-      children: _selectedChildren ?? '0',
-      residence: _selectedResidence ?? 'Não informado',
-      smartwatch: _watchController.text,
-    );
-
-    await DataBaseService().saveUser(user);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Dados salvos com sucesso!")),
-      );
-      Navigator.pop(context);
     }
   }
 
   @override
   void dispose() {
+    _dateController.dispose();
     _watchController.dispose();
     super.dispose();
   }
@@ -119,6 +141,7 @@ class _UserSettingsState extends State<UserSettings> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextFormField(
+                      controller: _dateController,
                       decoration: const InputDecoration(
                         labelText: 'Data de Nascimento',
                         border: OutlineInputBorder(),
@@ -135,8 +158,12 @@ class _UserSettingsState extends State<UserSettings> {
 
                         if (pickedDate != null) {
                           setState(() {
+                            String day =
+                                pickedDate.day.toString().padLeft(2, '0');
+                            String month =
+                                pickedDate.month.toString().padLeft(2, '0');
                             _dateController.text =
-                                "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                                "$day/$month/${pickedDate.year}";
                           });
                         }
                       },

@@ -80,7 +80,7 @@ class AuthGate extends StatelessWidget {
           return const Home();
         }
 
-        return const OnboardingScreen();
+        return const Home();
       },
     );
   }

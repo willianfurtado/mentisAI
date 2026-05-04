@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentis_ai/services/health_sync_service.dart';
 import 'package:mentis_ai/services/prediction_service.dart';
 import 'package:mentis_ai/screens/widgets/screening_system/analysis_card.dart';
 import 'package:mentis_ai/screens/widgets/screening_system/cluster_gauge.dart';
@@ -24,8 +25,6 @@ class ScreeeningSystem extends StatefulWidget {
 }
 
 class _ScreeeningSystemState extends State<ScreeeningSystem> {
-  final PredictionService _aiService = PredictionService();
-
   int _clusterResult = -1;
   String _label = "Analisando dados...";
   double _score = 0.0;
@@ -34,39 +33,63 @@ class _ScreeeningSystemState extends State<ScreeeningSystem> {
   @override
   void initState() {
     super.initState();
-    _loadAndPredict();
+    _syncAndPredict();
   }
 
-  Future<void> _loadAndPredict() async {
-    await _aiService.loadModel();
+  Future<void> _syncAndPredict() async {
+    try {
+      final healthSync = HealthSyncService();
+      final predictionService = PredictionService();
 
-    // 2. Uso dos dados reais passados pelo widget (vindo da Home)
-    int cluster =
-        _aiService.predict([widget.steps.toDouble(), widget.calories]);
+      final data = await healthSync.pushDatatoModel(DateTime.now());
 
-    if (mounted) {
-      setState(() {
-        _clusterResult = cluster;
-        _isLoading = false;
+      if (data != null) {
+        final result = await predictionService.getPredictionCluster(data);
 
-        
-        switch (cluster) {
-          case 0: 
-            _label = "Nível Ativo / Saudável";
-            _score = 30.0;
-            break;
-          case 1: // Moderado
-            _label = "Nível Moderado";
-            _score = 65.0;
-            break;
-          case 2: // Risco
-            _label = "Grupo de Risco (Sedentarismo)";
-            _score = 90.0;
-            break;
-          default:
-            _label = "Erro na análise";
-            _score = 0.0;
+        if (result != null && result.containsKey('cluster_principal')) {
+          final int cluster = result['cluster_principal'];
+
+          if (mounted) {
+            setState(() {
+              switch (cluster) {
+                // Perfil de riscos
+                case 1: 
+                  _label = "Risco Baixo";
+                  _score = 25.0;
+                  break;
+                case 2:
+                  _label = "Risco Moderado-Baixo";
+                  _score = 50.0;
+                  break;
+                case 0:
+                  _label = "Risco Moderado-Alto";
+                  _score = 75.0;
+                  break;
+                case 3:
+                  _label = "Risco Alto";
+                  _score = 100.0;
+                  break;
+                default:
+                  _label = "Análise inconclusiva";
+                  _score = 0.0;
+              } 
+            });
+          }
         }
+      } else {
+        _handleError("Não foi possível sincronizar dados");
+      }
+
+    } catch (e) {
+      _handleError("Erro na predição: $e");
+    }
+  }
+
+  void _handleError(String message){
+    if(mounted) {
+      setState(() {
+        _label = message;
+        _isLoading = false;
       });
     }
   }
