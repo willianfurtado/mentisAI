@@ -51,6 +51,7 @@ dependencies:
   #     url: https://github.com/am15h/tflite_flutter_plugin.git
   ml_algo: ^16.18.0
   ml_dataframe: ^1.5.0
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:
