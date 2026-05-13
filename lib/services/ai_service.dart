@@ -25,6 +25,7 @@ class AIService {
     } catch(e) {
       print("Erro ao conectar com a IA: $e");
     }
+    return null;
   }
 
   final HealthSyncService healthSyncService = HealthSyncService();

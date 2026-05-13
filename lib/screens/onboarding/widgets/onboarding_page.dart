@@ -11,7 +11,7 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: const EdgeInsets.fromLTRB(
         32,
         32,
         32,
@@ -41,14 +41,14 @@ class OnboardingPage extends StatelessWidget {
                 children: [
                   TextSpan(
                       text: item.text,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'HostGrotesk',
                       )),
                   TextSpan(
                     text: item.highLightedText,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.supportGreen2,
                       fontSize: 25,
                       fontWeight: FontWeight.w500,

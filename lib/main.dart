@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentis_ai/screens/login/login.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system.dart';
-import 'package:mentis_ai/screens/onboarding/onboarding_screen.dart';
 import 'package:mentis_ai/screens/user_profile/user_profile.dart';
 import 'package:mentis_ai/screens/user_profile/user_settings.dart';
 import 'package:mentis_ai/screens/evolution_system/evolution_system_steps.dart';
