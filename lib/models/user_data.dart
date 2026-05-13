@@ -11,7 +11,6 @@ class UserData {
   final String residence;
   final String smartwatch;
 
-
   UserData({
     this.id,
     required this.gender,
@@ -26,6 +25,7 @@ class UserData {
     required this.smartwatch,
   });
 
+  //transforma o Map do banco em um objeto UserData
   factory UserData.fromMap(Map<String, dynamic> map) {
     return UserData(
       gender: map['gender'], 

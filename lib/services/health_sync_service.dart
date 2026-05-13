@@ -5,9 +5,19 @@ class HealthSyncService {
   //função assíncrona para puxar os dados do HealthConnec
   Future pushDatatoModel(DateTime date) async {
     final Health health = Health();
+    DateTime startTime;
+    DateTime endTime;
 
-    DateTime startTime = DateTime(date.year, date.month, date.day-1, 19, 0, 0);
-    DateTime endTime = DateTime(date.year, date.month, date.day, 18, 59, 59);
+    // Se a hora for acima de 19h, é iniciado um novo ciclo
+    if(date.hour >= 19) {
+      startTime = DateTime(date.year, date.month, date.day, 19, 0, 0);
+      endTime = DateTime(date.year, date.month, date.day + 1, 18, 59, 59);
+    } else {
+      startTime = DateTime(date.year, date.month, date.day-1, 19, 0, 0);
+      endTime = DateTime(date.year, date.month, date.day, 18, 59, 59);
+    }
+
+    print("Ciclo atual: de ${startTime.toString()} até ${endTime.toString()}");
 
     final types = [
       HealthDataType.STEPS,
@@ -91,10 +101,10 @@ class HealthSyncService {
         "min_hr": minHr,
         "max_hr": maxHr,
         "mean_hr": meanHr,
-        "lightSleep": lightSleepSec,
-        "deepSleep": deepSleepSec,
-        "remSleep": remSleepSec,
-        "awakeSleep": awakeSleepSec,
+        "lightsleep": lightSleepSec,
+        "deepsleep": deepSleepSec,
+        "remsleep": remSleepSec,
+        "awakesleep": awakeSleepSec,
       };
 
     } catch(e) {

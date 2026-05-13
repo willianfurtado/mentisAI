@@ -140,6 +140,7 @@ class _HomeContentState extends State<HomeContent> {
 
       if (!mounted) return;
 
+      //Somente para a Home
       setState(() {
         _currentDate = date;
         _steps = stepsTotal.toString();
@@ -149,7 +150,7 @@ class _HomeContentState extends State<HomeContent> {
         _progressValues = [stepProgress, calProgress, sleepProgress, heartProgress];
       });
 
-      //mod
+      //Envio para o screening
       widget.onDataLoaded(
         steps: stepsTotal,
         calories: totalCalories.toDouble(),

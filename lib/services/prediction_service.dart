@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class PredictionService {
-  final Uri url = Uri.parse('');
+  final Uri url = Uri.parse('https://mentis-api.fly.dev/predict');
 
   Future<Map<String, dynamic>?> getPredictionCluster(Map<String, dynamic> healthData) async {
     try {

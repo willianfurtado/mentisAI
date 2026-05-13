@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-scikit-fuzzy
 joblib
 pandas
 scikit-learn

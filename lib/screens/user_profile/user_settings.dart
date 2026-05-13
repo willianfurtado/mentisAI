@@ -23,6 +23,34 @@ class _UserSettingsState extends State<UserSettings> {
   String? _selectedChildren;
   String? _selectedResidence;
 
+  Future<void> _loadUserData() async {
+    try {
+      final user = await DataBaseService().getUser(1);
+
+      if (user != null) {
+        print("Usuário encontrado: ${user.gender}");
+        setState(() {
+          _dateController.text = user.dateOfBirth;
+          _watchController.text = user.smartwatch;
+          _selectedGender = user.gender;
+          _selectedMaritalStatus = user.maritalStatus;
+          _selectedEducationLevel = user.educationLevel;
+          _selectedProfession = user.profession;
+          _selectedIncome = user.income;
+          _selectedFamilyArrangement = user.familyArrangement;
+          _selectedChildren = user.children;
+          _selectedResidence = user.residence;
+        });
+
+      } else {
+        print("Nenhum usuário salvo. ");
+
+      }
+    } catch (e) {
+      print("Erro ao carregar os dados: $e ");
+    }
+  }
+
   Future<void> _saveProfile() async {
     if (_selectedGender == null ||
         _selectedEducationLevel == null ||
@@ -31,50 +59,54 @@ class _UserSettingsState extends State<UserSettings> {
         const SnackBar(
             content: Text("Por favor, preencha os campos obrigatórios")),
       );
-
-      try {
-        final user = UserData(
-          id: 1,
-          gender: _selectedGender!,
-          dateOfBirth: _dateController.text,
-          maritalStatus: _selectedMaritalStatus ?? 'Não informado',
-          educationLevel: _selectedEducationLevel!,
-          profession: _selectedProfession ?? 'Não informado',
-          income: _selectedIncome ?? 'Não informado',
-          familyArrangement: _selectedFamilyArrangement ?? 'Não informado',
-          children: _selectedChildren ?? '0',
-          residence: _selectedResidence ?? 'Não informado',
-          smartwatch: _watchController.text,
-        );
-
-        final result = await DataBaseService().saveUser(user);
-
-        if (mounted) {
-          if (result > 0) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Dados salvos com sucesso!"),
-                backgroundColor: Colors.green,
-              ),
-            );
-            Navigator.pop(context);
-          }
-        } else {
-          throw Exception("Falha ao inserir dados.");
-        }
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Erro ao salvar: $e"),
-              backgroundColor: Colors.red, 
-            ),
-          );
-        }
-      }
-
       return;
     }
+
+    try {
+      final user = UserData(
+        id: 1,
+        gender: _selectedGender!,
+        dateOfBirth: _dateController.text,
+        maritalStatus: _selectedMaritalStatus ?? 'Não informado',
+        educationLevel: _selectedEducationLevel!,
+        profession: _selectedProfession ?? 'Não informado',
+        income: _selectedIncome ?? 'Não informado',
+        familyArrangement: _selectedFamilyArrangement ?? 'Não informado',
+        children: _selectedChildren ?? '0',
+        residence: _selectedResidence ?? 'Não informado',
+        smartwatch: _watchController.text,
+      );
+
+      final result = await DataBaseService().saveUser(user);
+
+      if (mounted) {
+        if (result > 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Dados salvos com sucesso!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context);
+        }
+      } else {
+        throw Exception("Falha ao inserir dados.");
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Erro ao salvar: $e"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    _loadUserData();
   }
 
   @override
@@ -123,6 +155,7 @@ class _UserSettingsState extends State<UserSettings> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
+                      value: _selectedGender,
                       decoration: const InputDecoration(
                         labelText: 'Gênero',
                         border: OutlineInputBorder(),
@@ -175,6 +208,7 @@ class _UserSettingsState extends State<UserSettings> {
 
               //Campo de Status Civil
               DropdownButtonFormField<String>(
+                value: _selectedMaritalStatus,
                 decoration: const InputDecoration(
                   labelText: 'Status Civil',
                   border: OutlineInputBorder(),
@@ -221,6 +255,7 @@ class _UserSettingsState extends State<UserSettings> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
+                      value: _selectedEducationLevel,
                       isExpanded: true,
                       decoration: const InputDecoration(
                         labelText: 'Nível Educacional',
@@ -248,6 +283,7 @@ class _UserSettingsState extends State<UserSettings> {
                   ),
                   Expanded(
                     child: DropdownButtonFormField<String>(
+                      value: _selectedProfession,
                       isExpanded: true,
                       decoration: const InputDecoration(
                         labelText: 'Profissão',
@@ -258,7 +294,6 @@ class _UserSettingsState extends State<UserSettings> {
                         'Autônomo',
                         'Meio Período',
                         'Período Completo',
-                        'Autônomo',
                         'Desempregado',
                         'Aposentado'
                       ]
@@ -279,6 +314,7 @@ class _UserSettingsState extends State<UserSettings> {
 
               // Campo de renda
               DropdownButtonFormField<String>(
+                value: _selectedIncome,
                 decoration: const InputDecoration(
                   labelText: 'Renda',
                   border: OutlineInputBorder(),
@@ -329,6 +365,7 @@ class _UserSettingsState extends State<UserSettings> {
 
               //Campo de arranjo familiar
               DropdownButtonFormField<String>(
+                value: _selectedFamilyArrangement,
                 decoration: const InputDecoration(
                   labelText: 'Família',
                   border: OutlineInputBorder(),
@@ -354,6 +391,7 @@ class _UserSettingsState extends State<UserSettings> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
+                      value: _selectedChildren,
                       decoration: const InputDecoration(
                         labelText: 'Filhos',
                         border: OutlineInputBorder(),
@@ -377,6 +415,7 @@ class _UserSettingsState extends State<UserSettings> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: DropdownButtonFormField<String>(
+                      value: _selectedResidence,
                       decoration: const InputDecoration(
                         labelText: 'Residência',
                         border: OutlineInputBorder(),
