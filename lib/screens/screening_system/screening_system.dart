@@ -26,7 +26,7 @@ class ScreeeningSystem extends StatefulWidget {
 }
 
 class _ScreeeningSystemState extends State<ScreeeningSystem> {
-  final int _clusterResult = -1;
+  int _clusterResult = -1;
   String _label = "Analisando dados...";
   double _score = 0.0;
   bool _isLoading = true;

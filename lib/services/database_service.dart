@@ -52,7 +52,7 @@ class DataBaseService {
         familyArrangement TEXT NOT NULL,
         children TEXT NOT NULL,
         residence TEXT NOT NULL, 
-        smartwatch TEXT NOT NULL
+        smartwatch TEXT NOT
       )
     ''');
   }

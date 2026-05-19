@@ -32,6 +32,7 @@ class _HomeContentState extends State<HomeContent> {
   String _calories = "0"; 
   String _heartRate = "--";
   String _sleepDuration = "--";
+  double _sleepProgress = 0.0;
 
   List<double> _progressValues = [0.0, 0.0, 0.0, 0.0];
 
@@ -147,6 +148,7 @@ class _HomeContentState extends State<HomeContent> {
         _calories = totalCalories.toString();
         _heartRate = lastHeartRate > 0 ? lastHeartRate.toString() : "--";
         _sleepDuration = sleepStr;
+        _sleepProgress = sleepProgress;
         _progressValues = [stepProgress, calProgress, sleepProgress, heartProgress];
       });
 
@@ -200,7 +202,7 @@ class _HomeContentState extends State<HomeContent> {
               "Olá, $primeiroNome",
               style: const TextStyle(fontSize: 24, color: Colors.grey),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
 
             Expanded(
               child: ListView(
@@ -243,22 +245,31 @@ class _HomeContentState extends State<HomeContent> {
                           height: 30,
                         ),
                       ),
-                      MetricsCardHeart(
-                        title: 'Freq Cardíaca',
-                        value: _heartRate,
-                        unit: 'bpm',
-                        icon: SvgPicture.asset(
-                          'assets/images/heart-pulse.svg',
-                          height: 30,
-                        ),
-                        chartData: const [80, 75, 90, 85, 96, 92],
-                      ),
+                      // MetricsCardHeart(
+                      //   title: 'Freq Cardíaca',
+                      //   value: _heartRate,
+                      //   unit: 'bpm',
+                      //   icon: SvgPicture.asset(
+                      //     'assets/images/heart-pulse.svg',
+                      //     height: 30,
+                      //   ),
+                      //   chartData: const [80, 75, 90, 85, 96, 92],
+                      // ),
                       MetricsCard(
                         title: 'Passos',
                         value: _steps,
                         unit: 'passos',
                         iconWidget: SvgPicture.asset(
                           'assets/images/person-walking.svg',
+                          height: 30,
+                        ),
+                      ),
+                      MetricsCard(
+                        title: 'Freq. Cardíaca',
+                        value: _heartRate,
+                        unit: 'bpm',
+                        iconWidget: SvgPicture.asset(
+                          'assets/images/heart-pulse.svg',
                           height: 30,
                         ),
                       ),
@@ -276,16 +287,17 @@ class _HomeContentState extends State<HomeContent> {
                   SleepCard(
                     title: 'Sono',
                     duration: _sleepDuration,
+                    sleepProgress: _sleepProgress,
                     iconWidget: SvgPicture.asset(
                       'assets/images/moon.svg',
                       height: 18,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const SleepQualityCard(
-                      title: 'Qualidade do Sono',
-                      qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8]
-                  )
+                  // const SizedBox(height: 10),
+                  // const SleepQualityCard(
+                  //     title: 'Qualidade do Sono',
+                  //     qualityOfSleepData: [0.2, 0.3, .4, .3, .6, .4, .8]
+                  // )
                 ],
               ),
             ),

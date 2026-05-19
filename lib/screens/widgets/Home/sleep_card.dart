@@ -5,12 +5,14 @@ import 'package:mentis_ai/utils/app-colors.dart';
 class SleepCard extends StatelessWidget {
   final String title;
   final String duration;
+  final double sleepProgress;
   final Widget iconWidget;
 
   const SleepCard({
     super.key,
     required this.title,
     required this.duration,
+    required this.sleepProgress,
     required this.iconWidget,
   });
 
@@ -57,7 +59,7 @@ class SleepCard extends StatelessWidget {
             ],
           ),
 
-          const SleepBarChart(progressRatio: 0.6),
+          SleepBarChart(progressRatio: sleepProgress),
         ],
       ),
     );

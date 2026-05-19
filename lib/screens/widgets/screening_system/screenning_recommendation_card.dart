@@ -38,31 +38,42 @@ class RecomendationCard extends StatelessWidget {
         color: AppColors.gray300,
         borderRadius: BorderRadius.circular(16.0),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Recomendações',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
+      // child: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     // const Text(
+      //     //   'Recomendações',
+      //     //   textAlign: TextAlign.center,
+      //     //   style: TextStyle(
+      //     //     fontSize: 20,
+      //     //     fontWeight: FontWeight.w500,
+      //     //     color: Colors.black,
+      //     //   ),
+      //     // ),
+      //     // const SizedBox(height: 12),
+      //     Center(
+      //       child: Text(
+      //         _getRecommendationMessage(),
+      //         textAlign: TextAlign.center,
+      //         style: TextStyle(
+      //           fontSize: 18,
+      //           fontWeight: FontWeight.bold,
+      //           color: _getRecommendationColor(), 
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      child: Center(
+        child: Text(
+          _getRecommendationMessage(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: _getRecommendationColor(), 
           ),
-          const SizedBox(height: 12),
-          Center(
-            child: Text(
-              _getRecommendationMessage(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: _getRecommendationColor(), 
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
