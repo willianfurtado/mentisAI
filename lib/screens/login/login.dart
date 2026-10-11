@@ -73,32 +73,32 @@ class Login extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 40),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Já tem uma conta?',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'HostGrotesk',
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Acessar conta',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.supportGreen2,
-                        fontFamily: 'HostGrotesk',
-                      ),
-                    ),
-                  ],
-                ),
+                // const SizedBox(height: 40),
+                // const Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Já tem uma conta?',
+                //       style: TextStyle(
+                //         fontSize: 20,
+                //         fontWeight: FontWeight.w500,
+                //         fontFamily: 'HostGrotesk',
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       width: 5,
+                //     ),
+                //     Text(
+                //       'Acessar conta',
+                //       style: TextStyle(
+                //         fontSize: 20,
+                //         fontWeight: FontWeight.w500,
+                //         color: AppColors.supportGreen2,
+                //         fontFamily: 'HostGrotesk',
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

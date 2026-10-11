@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mentis_ai"
+    namespace = "com.mentisai.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
