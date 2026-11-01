@@ -69,6 +69,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "409331129900-c71ng4tvbs49uf4htje676a61oi1vn4k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mentisai.app",
+            "certificate_hash": "cf8f4470a5a144ed31cd76d8edaa2ab0bba43b8c"
+          }
+        },
+        {
+          "client_id": "409331129900-g2bt2sqs9tvgqfp53rp2ocgvj79q6kdo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mentisai.app",
+            "certificate_hash": "2db56d7023e7112d1de57d06ce14c6fc2132cf00"
+          }
+        },
+        {
           "client_id": "409331129900-9stgkk1gpq625kbetlv6s5avqb3fke0s.apps.googleusercontent.com",
           "client_type": 3
         }
